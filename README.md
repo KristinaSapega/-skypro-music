@@ -1,2 +1,2 @@
-# -skypro-music
+# skypro-music
 Музыкальный сервис
