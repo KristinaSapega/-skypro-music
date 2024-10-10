@@ -18,12 +18,12 @@ export const Track: React.FC<TrackProps> = ({title, author, album, time}) => {
                         <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                     </svg>
                 </div>
-                <div className="track__title-text">
+                {/* <div className="track__title-text"> */}
                     <a className={styles.trackTitleLink} href="http://">
                         {title}
-                        <span className="track__title-span"></span>
+                        <span className={styles.trackTitleSpan}></span>
                     </a>
-                </div>
+                {/* </div> */}
             </div>
             <div className={styles.trackAuthor}>
                 <a className={styles.trackAuthorLink}href="http://">{author}</a>
