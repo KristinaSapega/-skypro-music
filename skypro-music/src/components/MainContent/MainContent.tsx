@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 export const MainContent = () => {
     const [tracks, setTracks] = useState<TrackType[]>([]);
     const [error, setError] = useState<string | null>(null);
-    
+    const [openFilter, setOpenFilter] = useState<string | null>(null);
+
     useEffect(() => {
     const fetchTracks = async () => {
         try {
@@ -23,6 +24,20 @@ export const MainContent = () => {
     };
     fetchTracks(); // Вызываем функцию при монтировании компонента
   }, []); // Пустой массив зависимостей означает, что useEffect выполнится один раз при монтировании
+
+  const uniqueAuthors = Array.from(new Set(tracks.map((track) => track.author)));
+  const uniqueGenres = Array.from(new Set(tracks.flatMap((track) => track.genre)));
+  const uniqueReleaseDate = Array.from(new Set(tracks.map((track) => new Date(track.release_date).getFullYear())));
+  
+  const toggleFilter = (filterType: string) => {
+    if (openFilter === filterType) {
+        setOpenFilter(null); // Закрываем, если тот же фильтр
+    }else {
+        setOpenFilter(filterType); // Открываем новый фильтр
+    }
+  };
+
+
   // Если ошибка, выводим её на экран
   if (error) {
     return <div className={styles.errorMessage}>Ошибка: {error}</div>;
@@ -43,14 +58,46 @@ export const MainContent = () => {
           <h2 className={styles.centerblockH2}>Треки</h2>
           <div className={styles.centerblockFilter}>
             <div className={styles.filterTitle}>Искать по:</div>
-            <div className={styles.filterButton}>
+            <div className={styles.filterButton} onClick={() => toggleFilter("author")}>
               исполнителю
             </div>
-            <div className={styles.filterButton}>
+            <div className={styles.filterButton} onClick={() => toggleFilter("releaseDate")}>
               году выпуска
             </div>
-            <div className={styles.filterButton}>жанру</div>
+            <div className={styles.filterButton} onClick={() => toggleFilter("genre")}
+            >жанру</div>
           </div>
+          {/* Отображение фильтра исполнителей */}
+      {openFilter === "author" && (
+        <div className={styles.filterList}>
+          {uniqueAuthors.map((author, index) => (
+            <div key={index} className={styles.filterItem}>
+              {author}
+            </div>
+          ))}
+        </div>
+      )}
+      {/* Отображение фильтра годов */}
+      {openFilter === "releaseDate" && (
+        <div className={styles.filterList}>
+          {uniqueReleaseDate.map((release_date, index) => (
+            <div key={index} className={styles.filterItem}>
+              {release_date}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Отображение фильтра жанров */}
+      {openFilter === "genre" && (
+        <div className={styles.filterList}>
+          {uniqueGenres.map((genre, index) => (
+            <div key={index} className={styles.filterItem}>
+              {genre}
+            </div>
+          ))}
+        </div>
+      )}
           <div className={`${styles.centerblockContent} ${styles.playlistContent}`}>
             <div className={`${styles.contentTitle} ${styles.playlistTitleCol}`}>
               <div className={`${styles.playlistTitleCol} ${styles.col01}`}>Трек</div>
@@ -62,7 +109,7 @@ export const MainContent = () => {
                 </svg>
               </div>
             </div>
-            <TrackList />
+            <TrackList tracks={tracks} />
           </div>
         </div>
 
