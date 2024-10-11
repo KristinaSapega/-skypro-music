@@ -1,0 +1,11 @@
+.contentPlaylist {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .playlistItem {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+  }

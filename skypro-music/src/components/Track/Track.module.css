@@ -1,0 +1,85 @@
+.playlisTrack {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .trackTitle {
+    display: flex;
+    align-items: center;
+    width: 447px;
+  }
+
+  .trackTitleSpan {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4e4e4e;
+  }
+  
+  .trackTitleImage {
+    width: 51px;
+    height: 51px;
+    padding: 16px;
+    background: #313131;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 17px;
+  }
+  
+  .trackTitleSvg {
+    width: 18px;
+    height: 17px;
+    fill: transparent;
+    stroke: #4e4e4e;
+  }
+  
+  .trackTitleLink {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+  }
+  
+  .trackAuthor {
+    width: 321px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .trackAuthorLink {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+  }
+  
+  .trackAlbum {
+    width: 245px;
+  }
+  
+  .trackAlbumLink {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #696969;
+  }
+  
+  .trackTimeSvg {
+    width: 14px;
+    height: 12px;
+    margin-right: 17px;
+    fill: transparent;
+    stroke: #696969;
+  }
+  
+  .trackTimeText {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: right;
+    color: #696969;
+  }
+  
