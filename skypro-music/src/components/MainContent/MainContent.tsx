@@ -1,7 +1,32 @@
+"use client"
+import { GetTracks } from "@/api/apiTrack";
 import { TrackList } from "../TrackList/TrackList";
 import styles from "./MainContent.module.css";
+import { TrackType } from "@/types";
+import { useEffect, useState } from "react";
 
 export const MainContent = () => {
+    const [tracks, setTracks] = useState<TrackType[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    
+    useEffect(() => {
+    const fetchTracks = async () => {
+        try {
+            const data = await GetTracks();
+            console.log("API Data:", data);
+            setTracks(data);
+        }catch (error) {
+            if(error instanceof Error) {
+                setError(error.message)
+              }
+          }
+    };
+    fetchTracks(); // Вызываем функцию при монтировании компонента
+  }, []); // Пустой массив зависимостей означает, что useEffect выполнится один раз при монтировании
+  // Если ошибка, выводим её на экран
+  if (error) {
+    return <div className={styles.errorMessage}>Ошибка: {error}</div>;
+  }
     return (
         <div className={styles.mainCenterblock}>
           <div className={styles.centerblockSearch}>

@@ -35,7 +35,8 @@
     font-size: 14px;
     line-height: 22px;
     color: #ffffff;
-    margin-right: 10px;
+    margin-right: 20px;
+    
   }
   
   .sidebarIcon {
@@ -44,6 +45,8 @@
     background-color: #313131;
     border-radius: 50%;
     cursor: pointer;
+    margin-bottom: 10px;
+    
   }
   
   .sidebarBlock {
