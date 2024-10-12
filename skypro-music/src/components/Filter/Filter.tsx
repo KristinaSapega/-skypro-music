@@ -14,6 +14,5 @@ export default function Filter({ filterList }: FilterProp) {
                 ))}
             </div>
         </div>
-    )
-
+    );
 }

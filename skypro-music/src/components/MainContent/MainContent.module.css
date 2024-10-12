@@ -1,6 +1,6 @@
 .mainCenterblock {
     width: auto;
-    max-width: 1300px;
+    max-width: 1200px;
     -webkit-box-flex: 3;
     -ms-flex-positive: 3;
     flex-grow: 1;
@@ -94,6 +94,16 @@
     border-radius: 60px;
     padding: 6px 20px;
     position: relative;
+  }
+
+  .filterButton:hover {
+    color: #B672FF;
+    border-color: #B672FF;
+  }
+  
+  .filterButton.active {
+    color: #B672FF;
+    border-color: #B672FF;
   }
   
   .filterButton:not(:last-child) {

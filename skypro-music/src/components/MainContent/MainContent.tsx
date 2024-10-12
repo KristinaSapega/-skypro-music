@@ -28,7 +28,9 @@ export const MainContent = () => {
 
   const uniqueAuthors = Array.from(new Set(tracks.map((track) => track.author)));
   const uniqueGenres = Array.from(new Set(tracks.flatMap((track) => track.genre)));
-  const uniqueReleaseDate = Array.from(new Set(tracks.map((track) => new Date(track.release_date).getFullYear())));
+  const uniqueReleaseDate = Array.from(new Set(tracks.map((track) => new Date(track.release_date).getFullYear().toString())));
+  console.log(tracks.map((track) => track.genre)); 
+
   
   const toggleFilter = (filterType: string) => {
     if (openFilter === filterType) {
@@ -59,15 +61,21 @@ export const MainContent = () => {
           <h2 className={styles.centerblockH2}>Треки</h2>
           <div className={styles.centerblockFilter}>
             <div className={styles.filterTitle}>Искать по:</div>
-            <div className={styles.filterButton} onClick={() => toggleFilter("author")}>
+            <div className={`${styles.filterButton} ${openFilter === "author" ? styles.active : ""}`} 
+            onClick={() => toggleFilter("author")}>
               исполнителю 
               {openFilter === "author" && <Filter filterList = {uniqueAuthors} />}
             </div>
-            <div className={styles.filterButton} onClick={() => toggleFilter("releaseDate")}>
+            <div className={`${styles.filterButton} ${openFilter === "releaseDate" ? styles.active : ""}`} 
+            onClick={() => toggleFilter("releaseDate")}>
               году выпуска
+              {openFilter === "releaseDate" && <Filter filterList={uniqueReleaseDate} />}
             </div>
-            <div className={styles.filterButton} onClick={() => toggleFilter("genre")}
-            >жанру</div>
+            <div className={`${styles.filterButton} ${openFilter === "genre" ? styles.active : ""}`} 
+            onClick={() => toggleFilter("genre")}
+            >жанру
+            {openFilter === "genre" && <Filter filterList={uniqueGenres} />}
+            </div>
           </div>
           {/* Отображение фильтра исполнителей */}
       {/* {openFilter === "author" && (
@@ -80,7 +88,7 @@ export const MainContent = () => {
         </div>
       )} */}
       {/* Отображение фильтра годов */}
-      {openFilter === "releaseDate" && (
+      {/* {openFilter === "releaseDate" && (
         <div className={styles.filterList}>
           {uniqueReleaseDate.map((release_date, index) => (
             <div key={index} className={styles.filterItem}>
@@ -88,10 +96,10 @@ export const MainContent = () => {
             </div>
           ))}
         </div>
-      )}
+      )} */}
 
       {/* Отображение фильтра жанров */}
-      {openFilter === "genre" && (
+      {/* {openFilter === "genre" && (
         <div className={styles.filterList}>
           {uniqueGenres.map((genre, index) => (
             <div key={index} className={styles.filterItem}>
@@ -99,7 +107,7 @@ export const MainContent = () => {
             </div>
           ))}
         </div>
-      )}
+      )} */}
           <div className={`${styles.centerblockContent} ${styles.playlistContent}`}>
             <div className={`${styles.contentTitle} ${styles.playlistTitleCol}`}>
               <div className={`${styles.playlistTitleCol} ${styles.col01}`}>Трек</div>
