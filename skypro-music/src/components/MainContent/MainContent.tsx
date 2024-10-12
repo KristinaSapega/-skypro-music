@@ -4,6 +4,7 @@ import { TrackList } from "../TrackList/TrackList";
 import styles from "./MainContent.module.css";
 import { TrackType } from "@/types";
 import { useEffect, useState } from "react";
+import Filter from "../Filter/Filter";
 
 export const MainContent = () => {
     const [tracks, setTracks] = useState<TrackType[]>([]);
@@ -59,7 +60,8 @@ export const MainContent = () => {
           <div className={styles.centerblockFilter}>
             <div className={styles.filterTitle}>Искать по:</div>
             <div className={styles.filterButton} onClick={() => toggleFilter("author")}>
-              исполнителю
+              исполнителю 
+              {openFilter === "author" && <Filter filterList = {uniqueAuthors} />}
             </div>
             <div className={styles.filterButton} onClick={() => toggleFilter("releaseDate")}>
               году выпуска
@@ -68,7 +70,7 @@ export const MainContent = () => {
             >жанру</div>
           </div>
           {/* Отображение фильтра исполнителей */}
-      {openFilter === "author" && (
+      {/* {openFilter === "author" && (
         <div className={styles.filterList}>
           {uniqueAuthors.map((author, index) => (
             <div key={index} className={styles.filterItem}>
@@ -76,7 +78,7 @@ export const MainContent = () => {
             </div>
           ))}
         </div>
-      )}
+      )} */}
       {/* Отображение фильтра годов */}
       {openFilter === "releaseDate" && (
         <div className={styles.filterList}>

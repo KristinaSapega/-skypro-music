@@ -1,0 +1,22 @@
+.wrapper {
+    width: 248px;
+    height: 305px;
+    overflow-y: auto;
+};
+
+.filterList {
+    position:absolute;
+    left: 0;
+    top: 100px;
+    background-color:#313131;
+    padding: 34px;
+
+    
+};
+
+.filterItem {
+color:#B672FF;
+
+
+};
+

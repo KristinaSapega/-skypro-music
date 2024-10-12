@@ -1,8 +1,8 @@
 .mainCenterblock {
-    width: 70%;
-    /* width: auto; */
-    /* -webkit-box-flex: 3;
-    -ms-flex-positive: 3; */
+    width: auto;
+    max-width: 1300px;
+    -webkit-box-flex: 3;
+    -ms-flex-positive: 3;
     flex-grow: 1;
     padding: 20px 40px 20px 111px;
   }
@@ -93,6 +93,7 @@
     border: 1px solid #ffffff;
     border-radius: 60px;
     padding: 6px 20px;
+    position: relative;
   }
   
   .filterButton:not(:last-child) {
