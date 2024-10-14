@@ -1,7 +1,6 @@
 .mainSidebar {
     max-width: 418px;
-    padding: 20px 90px 20px 20px;
-    
+    padding: 20px 90px 20px 78px;
   }
 
   .sidebarPersonal {
@@ -18,7 +17,7 @@
     -webkit-box-pack: end;
     -ms-flex-pack: end;
     justify-content: flex-end;
-    padding: 12px 0 15px 0;
+    padding: 9px 0 12px 0;
     padding-left: 20px;
     justify-content: flex-start;
   }
@@ -26,23 +25,26 @@
   .sidebarPersonalName {
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 22px;
     color: #ffffff;
-    margin-right: 16px;
+    margin-right: 20px;
+    
   }
   
   .sidebarIcon {
-    width: 43px;
-    height: 43px;
+    width: 30px;
+    height: 30px;
     background-color: #313131;
     border-radius: 50%;
     cursor: pointer;
+    margin-bottom: 10px;
+    
   }
   
   .sidebarBlock {
     height: 100%;
-    padding: 240px 0 0 0;
+    padding: 20px 0 0 0;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

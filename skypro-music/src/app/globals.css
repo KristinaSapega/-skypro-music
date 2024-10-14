@@ -14,7 +14,7 @@
 a,
 a:visited {
   text-decoration: none;
-  font-family: "Montserrat", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
   cursor: pointer;
 }
 
