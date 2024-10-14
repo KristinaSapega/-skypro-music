@@ -2,6 +2,7 @@
 import { TrackType } from "@/types"
 import styles from "./Bar.module.css"
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
+import ProgressBar from "../ProgressBar/ProgressBar"
 
 type props = {
     currentTrack: TrackType 
@@ -15,7 +16,16 @@ export const Bar = ({currentTrack}: props) => {
     });
     
 
-    const audioRef = useRef<HTMLAudioElement | null >(null);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    const formatTime = (time: number) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+        return `${minutes}:${seconds}`;
+    };
+
+
+
     const onTogglePLay = () => {
         if (audioRef.current) {
             if (isPlay) {
@@ -33,16 +43,23 @@ export const Bar = ({currentTrack}: props) => {
         if (audioRef.current) {
             audioRef.current.volume = volume
         }
-
     };
 
     const onChangeTime = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
-        setProgress({currentTime:e.currentTarget.currentTime, duration: e.currentTarget.duration})
+        setProgress({
+            currentTime:e.currentTarget.currentTime, 
+            duration: e.currentTarget.duration
+        })
+    };
 
+    const onSeek = (e: ChangeEvent<HTMLInputElement>) => {
+        if(audioRef.current) {
+            audioRef.current.currentTime = Number(e.target.value);
+            setProgress({...progress, currentTime: Number(e.target.value)})
+        }
+    };
 
-    }
-
-    return (
+    return (    
 
         <>
         <audio onTimeUpdate={onChangeTime} 
@@ -51,7 +68,17 @@ export const Bar = ({currentTrack}: props) => {
         src={currentTrack.track_file} />
         <div className={styles.bar}>
             <div className={styles.barContent}>
-                <div className={styles.barPlayerProgress}></div>
+            <div className={styles.timeDisplay}>
+                        <span>{formatTime(progress.currentTime)}</span>
+                        <span> / {formatTime(progress.duration)}</span>
+                    </div>
+                <ProgressBar 
+                max={progress.duration}
+                value={progress.currentTime}
+                step={1}
+                onChange={onSeek}
+                />
+                {/* <div className={styles.barPlayerProgress}></div> */}
                 <div className={styles.barPlayerBlock}>
 
                     <div className={styles.barPlayer}>

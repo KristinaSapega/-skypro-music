@@ -37,7 +37,7 @@ export const Track: React.FC<TrackProps> = ({track, setCurrentTrack}) => {
                 <svg className={styles.trackTimeSvg}>
                     <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
                 </svg>
-                <span className={styles.trackTimeText}>{Math.floor(track.duration_in_seconds/60)} : {Math.floor(track.duration_in_seconds%      60)}</span>
+                <span className={styles.trackTimeText}>{Math.floor(track.duration_in_seconds/60)} : {Math.floor(track.duration_in_seconds % 60)}</span>
             </div>
         </div>
     );

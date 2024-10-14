@@ -15,12 +15,18 @@
     -ms-flex-direction: column;
     flex-direction: column;
   }
+
+  .timeDisplay {
+    margin-left: auto; 
+    font-size: 14px; 
+    color: #b672ff; 
+}
   
-  .barPlayerProgress {
+  /* .barPlayerProgress {
     width: 100%;
     height: 5px;
     background: #2e2e2e;
-  }
+  } */
   
   .barPlayerBlock {
     height: 73px;
