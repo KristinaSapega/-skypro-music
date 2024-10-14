@@ -70,6 +70,10 @@ export const Bar = ({currentTrack}: props) => {
         }
     };
 
+    const showAlert = () => {
+        alert("Еще не реализовано");
+    };
+
     return (    
 
         <>
@@ -94,7 +98,7 @@ export const Bar = ({currentTrack}: props) => {
 
                     <div className={styles.barPlayer}>
                         <div className={styles.playerControls}>
-                            <div className={styles.playerBtnPrev}>
+                            <div onClick={showAlert} className={styles.playerBtnPrev}>
                                 <svg className={styles.playerBtnPrevSvg}>
                                     <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                                 </svg>
@@ -111,7 +115,7 @@ export const Bar = ({currentTrack}: props) => {
                                     </svg>
                                 )}
                             </div>
-                            <div className={styles.playerBtnNext}>
+                            <div onClick={showAlert} className={styles.playerBtnNext}>
                                 <svg className={styles.playerBtnNextSvg}>
                                     <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                                 </svg>
@@ -122,7 +126,7 @@ export const Bar = ({currentTrack}: props) => {
                                     <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                                 </svg>
                             </div>
-                            <div className={`${styles.playerBtnShuffle} ${styles.btnIcon}`}>
+                            <div onClick={showAlert} className={`${styles.playerBtnShuffle} ${styles.btnIcon}`}>
                                 <svg className={styles.playerBtnShuffleSvg}>
                                     <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                                 </svg>
