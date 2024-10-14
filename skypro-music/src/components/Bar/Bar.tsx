@@ -10,6 +10,9 @@ type props = {
 
 export const Bar = ({currentTrack}: props) => {
     const [isPlay, setIsPlay] = useState(false)
+    const [isLoop, SetIsLoop] = useState(false)
+
+
     const [progress, setProgress] = useState({
         currentTime: 0,
         duration: 0,
@@ -38,6 +41,14 @@ export const Bar = ({currentTrack}: props) => {
         } 
     };
 
+    const onToggleLoop = () => {
+        if (audioRef.current) {
+            SetIsLoop(!isLoop);
+            console.log('Loop toggled:', !isLoop); 
+            audioRef.current.loop = !isLoop;
+        }
+    };
+
     const onChangeVolume = (e: ChangeEvent<HTMLInputElement>) => {
         const volume = Number(e.target.value)/100
         if (audioRef.current) {
@@ -64,7 +75,7 @@ export const Bar = ({currentTrack}: props) => {
         <>
         <audio onTimeUpdate={onChangeTime} 
         ref={audioRef} 
-        controls 
+        // controls 
         src={currentTrack.track_file} />
         <div className={styles.bar}>
             <div className={styles.barContent}>
@@ -105,7 +116,8 @@ export const Bar = ({currentTrack}: props) => {
                                     <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                                 </svg>
                             </div>
-                            <div className={`${styles.playerBtnRepeat} ${styles.btnIcon}`}>
+                            <div onClick={onToggleLoop}
+                            className={`${styles.playerBtnRepeat} ${styles.btnIcon} ${isLoop ? styles.playerBtnRepeatActive : ''}`}>
                                 <svg className={styles.playerBtnRepeatSvg}>
                                     <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                                 </svg>
