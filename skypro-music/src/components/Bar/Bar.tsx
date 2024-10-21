@@ -70,6 +70,11 @@ export const Bar = ({currentTrack}: props) => {
         }
     };
 
+    const handleCanPlay = () => {
+        audioRef.current?.play();
+        setIsPlay(true);
+    }
+
     const showAlert = () => {
         alert("Еще не реализовано");
     };
@@ -79,6 +84,7 @@ export const Bar = ({currentTrack}: props) => {
         <>
         <audio onTimeUpdate={onChangeTime} 
         ref={audioRef} 
+        onCanPlay={handleCanPlay}
         // controls 
         src={currentTrack.track_file} />
         <div className={styles.bar}>
