@@ -3,12 +3,13 @@ import { TrackType } from "@/types"
 import styles from "./Bar.module.css"
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
 import ProgressBar from "../ProgressBar/ProgressBar"
+import { useAppSelector } from "@/store/store"
+import { current } from "@reduxjs/toolkit"
 
-type props = {
-    currentTrack: TrackType 
-}
 
-export const Bar = ({currentTrack}: props) => {
+
+export const Bar = () => {
+    const {currentTrack} = useAppSelector(state => state.tracksSlice);
     const [isPlay, setIsPlay] = useState(false)
     const [isLoop, SetIsLoop] = useState(false)
 
@@ -79,13 +80,18 @@ export const Bar = ({currentTrack}: props) => {
         alert("Еще не реализовано");
     };
 
+    if(!currentTrack) {
+        return
+    }
+    
     return (    
 
         <>
         <audio onTimeUpdate={onChangeTime} 
         ref={audioRef} 
         onCanPlay={handleCanPlay}
-        // controls 
+        autoPlay
+        controls 
         src={currentTrack.track_file} />
         <div className={styles.bar}>
             <div className={styles.barContent}>
