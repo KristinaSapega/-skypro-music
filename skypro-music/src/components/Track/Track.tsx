@@ -1,6 +1,5 @@
 import { TrackType } from "@/types";
 import styles from "./Track.module.css"
-import { time } from "console";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setTrackState } from "@/store/features/trackSlice";
 
