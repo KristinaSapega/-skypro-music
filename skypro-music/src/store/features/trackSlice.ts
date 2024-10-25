@@ -9,6 +9,7 @@ type initialStateType = {
     shuffleTrackList: TrackType[],
     currentTrack: TrackType | null,
     currentTrackIndex: number,
+    defaultTracks: TrackType[],
 }
 
 const initialState: initialStateType = {
@@ -19,6 +20,7 @@ const initialState: initialStateType = {
     shuffleTrackList: [],
     currentTrack: null,
     currentTrackIndex: -1,
+    defaultTracks: [],
 };
 
 const trackSlice = createSlice({
@@ -29,45 +31,53 @@ const trackSlice = createSlice({
         setTrackState: (state, action: PayloadAction<TrackType>) => {
             state.currentPlaylist = state.tracks;
             state.currentTrack = action.payload;
-            state.currentTrackIndex = state.tracks.findIndex(track => track._id === action.payload._id)
+            //state.currentTrackIndex = state.tracks.findIndex(track => track._id === action.payload._id);
 
         },
         setTracks: (state, action: PayloadAction<TrackType[]>) => {
             state.tracks = action.payload;
+            state.defaultTracks = action.payload;
         },
         setNextTrack: (state) => {
-            const nextTrackIndex = state.currentTrackIndex +1;
-
-            if (nextTrackIndex < state.currentPlaylist.length) {
-                state.currentTrackIndex = nextTrackIndex;
-                state.currentTrack = state.currentPlaylist[nextTrackIndex]
-            } 
-            // else {
-            //     state.currentTrackIndex = 0; //устанавливаем индекс на первый трек
-            //     state.currentTrack = state.currentPlaylist[0]; //устанавливаем текущий трек как первый трек плейлиста
-            // }
+            const playlist = !state.isShuffle ? state.tracks : state.defaultTracks;
+            const currentTrackIndex = state.tracks.findIndex(track => track._id === state.currentTrack!._id);
+            state.currentTrack = currentTrackIndex < playlist.length - 1
+                ? playlist[currentTrackIndex + 1]
+                : state.currentTrack;
 
         },
         setPrevTrack: (state) => {
-            const prevTrackIndex = state.currentTrackIndex -1;
+            const playlist = !state.isShuffle ? state.tracks : state.defaultTracks;
+            const currentTrackIndex = state.tracks.findIndex(track => track._id === state.currentTrack!._id);
+            state.currentTrack = currentTrackIndex > 0
+                ? playlist[currentTrackIndex - 1]
+                : state.currentTrack;
+        },
 
-            if (prevTrackIndex >=0) {
-                state.currentTrackIndex = prevTrackIndex;
-                state.currentTrack = state.currentPlaylist[prevTrackIndex]
-            } else {
-                
-            }
+        setShuffle: (state) => {
+            state.defaultTracks.sort(() => Math.random() - 0.5)
 
-        }
+        },
+
+        setIsShuffle: (state, action: PayloadAction<boolean>) => {
+            state.isShuffle = action.payload;
+        },
+
+        setIsPlaying: (state, action: PayloadAction<boolean>) => {
+            state.isPlaying = action.payload;
+        },
     },
 });
 
 // Экспорт экшенов
-export const { 
-    setTrackState, 
+export const {
+    setTrackState,
     setTracks,
-    setNextTrack, 
-    setPrevTrack} = trackSlice.actions;
+    setNextTrack,
+    setPrevTrack,
+    setShuffle,
+    setIsShuffle,
+    setIsPlaying } = trackSlice.actions;
 
 // Экспорт редьюсера (экспорт по умолчанию)
 export default trackSlice.reducer;

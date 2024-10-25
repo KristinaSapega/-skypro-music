@@ -5,12 +5,12 @@ import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
 import ProgressBar from "../ProgressBar/ProgressBar"
 import { useAppDispatch, useAppSelector } from "@/store/store"
 import { current } from "@reduxjs/toolkit"
-import {setNextTrack, setPrevTrack} from "@/store/features/trackSlice"
+import {setIsShuffle, setNextTrack, setPrevTrack, setShuffle} from "@/store/features/trackSlice"
 
 
 
 export const Bar = () => {
-    const {currentTrack} = useAppSelector(state => state.tracksSlice);
+    const {currentTrack, isShuffle} = useAppSelector(state => state.tracksSlice);
     const [isPlay, setIsPlay] = useState(false)
     const [isLoop, SetIsLoop] = useState(false)
 
@@ -23,6 +23,11 @@ export const Bar = () => {
     const onClickPrevTrack = () => {
         dispatch(setPrevTrack());
     };
+
+    const onToggleShuffle = () => {
+        dispatch(setIsShuffle(!isShuffle));
+        dispatch(setShuffle());
+    }
 
 
     const [progress, setProgress] = useState({
@@ -148,7 +153,8 @@ export const Bar = () => {
                                     <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                                 </svg>
                             </div>
-                            <div onClick={showAlert} className={`${styles.playerBtnShuffle} ${styles.btnIcon}`}>
+                            <div onClick={onToggleShuffle} 
+                            className={`${styles.playerBtnShuffle} ${styles.btnIcon} ${isShuffle ? styles.playerBtnShuffleActive : ''}`}>
                                 <svg className={styles.playerBtnShuffleSvg}>
                                     <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                                 </svg>
