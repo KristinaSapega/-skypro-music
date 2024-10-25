@@ -31,7 +31,6 @@ const trackSlice = createSlice({
         setTrackState: (state, action: PayloadAction<TrackType>) => {
             state.currentPlaylist = state.tracks;
             state.currentTrack = action.payload;
-            //state.currentTrackIndex = state.tracks.findIndex(track => track._id === action.payload._id);
 
         },
         setTracks: (state, action: PayloadAction<TrackType[]>) => {
@@ -53,16 +52,13 @@ const trackSlice = createSlice({
                 ? playlist[currentTrackIndex - 1]
                 : state.currentTrack;
         },
-
         setShuffle: (state) => {
             state.defaultTracks.sort(() => Math.random() - 0.5)
 
         },
-
         setIsShuffle: (state, action: PayloadAction<boolean>) => {
             state.isShuffle = action.payload;
         },
-
         setIsPlaying: (state, action: PayloadAction<boolean>) => {
             state.isPlaying = action.payload;
         },
@@ -81,4 +77,5 @@ export const {
 
 // Экспорт редьюсера (экспорт по умолчанию)
 export default trackSlice.reducer;
+
 // export const TrackReducer = trackSlice.reducer;

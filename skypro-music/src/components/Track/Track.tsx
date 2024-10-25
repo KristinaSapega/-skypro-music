@@ -10,6 +10,10 @@ interface TrackProps {
 
 export const Track: React.FC<TrackProps> = ({track}) => {
     const dispatch = useAppDispatch();
+
+    const currentTrack = useAppSelector((state) => state.tracksSlice.currentTrack);
+    const isPlaying = useAppSelector((state) => state.tracksSlice.isPlaying);
+    const isCurrentTrack = currentTrack?._id === track._id;
     
 
     const onClickTrack = () => {
@@ -21,9 +25,15 @@ export const Track: React.FC<TrackProps> = ({track}) => {
         <div onClick={onClickTrack} className={styles.playlisTrack}>
             <div className={styles.trackTitle}>
                 <div className={styles.trackTitleImage}>
+                {isCurrentTrack ? (
+                        <div
+                            className={`${styles.playingDot} ${isPlaying ? styles.pulsing : ''}`}
+                        ></div>
+                    ) : (
                     <svg className={styles.trackTitleSvg}>
                         <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                     </svg>
+                    )}
                 </div>
                 {/* <div className="track__title-text"> */}
                     <a className={styles.trackTitleLink} href="http://">
