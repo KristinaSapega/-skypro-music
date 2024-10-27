@@ -1,6 +1,6 @@
 .mainCenterblock {
     width: auto;
-    max-width: 1000px;
+    width: 1136px;
     -webkit-box-flex: 3;
     -ms-flex-positive: 3;
     flex-grow: 1;
@@ -118,6 +118,7 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    width: 1136px;
   }
 
   .contentTitle {

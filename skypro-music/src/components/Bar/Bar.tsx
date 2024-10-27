@@ -1,10 +1,10 @@
 "use client"
-import { TrackType } from "@/types"
+//import { TrackType } from "@/types"
 import styles from "./Bar.module.css"
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
 import ProgressBar from "../ProgressBar/ProgressBar"
 import { useAppDispatch, useAppSelector } from "@/store/store"
-import { current } from "@reduxjs/toolkit"
+//import { current } from "@reduxjs/toolkit"
 import {setIsShuffle, setNextTrack, setPrevTrack, setShuffle} from "@/store/features/trackSlice"
 
 
@@ -92,9 +92,9 @@ export const Bar = () => {
         setIsPlay(true);
     }
 
-    const showAlert = () => {
-        alert("Еще не реализовано");
-    };
+    // const showAlert = () => {
+    //     alert("Еще не реализовано");
+    // };
 
     if(!currentTrack) {
         return
@@ -117,7 +117,7 @@ export const Bar = () => {
                 <ProgressBar 
                 max={progress.duration}
                 value={progress.currentTime}
-                step={1}
+                step={0.1}
                 onChange={onSeek}
                 />
                 {/* <div className={styles.barPlayerProgress}></div> */}
