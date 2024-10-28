@@ -8,7 +8,7 @@ type ProgressBarProps = {
 };
 
 export default function ProgressBar({ max, value, step, onChange }: ProgressBarProps) {
-    const progressPercentage = (value / (max || 1)) * 100;
+    //const progressPercentage = (value / (max || 1)) * 100;
 
     return (
       <input

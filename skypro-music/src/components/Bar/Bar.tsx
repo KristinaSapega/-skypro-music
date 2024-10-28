@@ -5,7 +5,7 @@ import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
 import ProgressBar from "../ProgressBar/ProgressBar"
 import { useAppDispatch, useAppSelector } from "@/store/store"
 //import { current } from "@reduxjs/toolkit"
-import {setIsShuffle, setNextTrack, setPrevTrack, setShuffle} from "@/store/features/trackSlice"
+import {setIsPlaying, setIsShuffle, setNextTrack, setPrevTrack, setShuffle} from "@/store/features/trackSlice"
 
 
 
@@ -44,15 +44,15 @@ export const Bar = () => {
         return `${minutes}:${seconds}`;
     };
 
-
-
     const onTogglePLay = () => {
         if (audioRef.current) {
             if (isPlay) {
                 setIsPlay(false)
+                dispatch(setIsPlaying(false));  // Обновляем Redux-состояние
                 audioRef.current.pause()
             } else {
                 setIsPlay(true)
+                dispatch(setIsPlaying(true));  
                 audioRef.current.play()
             }  
         } 
@@ -106,6 +106,7 @@ export const Bar = () => {
         ref={audioRef} 
         onCanPlay={handleCanPlay}
         autoPlay
+        onEnded={onClickNextTrack}
         //controls 
         src={currentTrack.track_file} />
         <div className={styles.bar}>

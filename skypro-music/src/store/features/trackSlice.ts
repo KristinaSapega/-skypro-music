@@ -59,7 +59,7 @@ const trackSlice = createSlice({
         setIsShuffle: (state, action: PayloadAction<boolean>) => {
             state.isShuffle = action.payload;
         },
-        setIsPlaying: (state, action: PayloadAction<boolean>) => {
+        setIsPlaying: (state, action: PayloadAction<boolean>) => { //воспроизводится трек или остановлен
             state.isPlaying = action.payload;
         },
     },
