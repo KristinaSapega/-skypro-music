@@ -1,7 +1,7 @@
 import { TrackType } from "@/types";
 import styles from "./Track.module.css"
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setTrackState } from "@/store/features/trackSlice";
+import { setIsPlaying, setTrackState } from "@/store/features/trackSlice";
 
 interface TrackProps {
     track: TrackType
@@ -18,6 +18,7 @@ export const Track: React.FC<TrackProps> = ({track}) => {
 
     const onClickTrack = () => {
         dispatch(setTrackState(track));
+        dispatch(setIsPlaying(true));
         
     }
     return (
