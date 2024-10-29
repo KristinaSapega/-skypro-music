@@ -166,8 +166,17 @@
   .playerBtnShuffleSvg {
     width: 19px;
     height: 12px;
-    fill: transparent;
-    stroke: #696969;
+    fill: none;
+    stroke: currentColor;
+    transition: stroke 0.3s ease;
+  }
+
+  .playerBtnShuffle {
+    color: #696969;
+  }
+
+  .playerBtnShuffleActive {
+    color: white; 
   }
   
   .playerTrackPlay {

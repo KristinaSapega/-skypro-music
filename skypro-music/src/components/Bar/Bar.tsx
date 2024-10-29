@@ -1,16 +1,33 @@
 "use client"
-import { TrackType } from "@/types"
+//import { TrackType } from "@/types"
 import styles from "./Bar.module.css"
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
 import ProgressBar from "../ProgressBar/ProgressBar"
+import { useAppDispatch, useAppSelector } from "@/store/store"
+//import { current } from "@reduxjs/toolkit"
+import {setIsPlaying, setIsShuffle, setNextTrack, setPrevTrack, setShuffle} from "@/store/features/trackSlice"
 
-type props = {
-    currentTrack: TrackType 
-}
 
-export const Bar = ({currentTrack}: props) => {
+
+export const Bar = () => {
+    const {currentTrack, isShuffle} = useAppSelector(state => state.tracksSlice);
     const [isPlay, setIsPlay] = useState(false)
     const [isLoop, SetIsLoop] = useState(false)
+
+    const dispatch = useAppDispatch();
+
+    const onClickNextTrack = () => {
+        dispatch(setNextTrack());
+    };
+
+    const onClickPrevTrack = () => {
+        dispatch(setPrevTrack());
+    };
+
+    const onToggleShuffle = () => {
+        dispatch(setIsShuffle(!isShuffle));
+        dispatch(setShuffle());
+    }
 
 
     const [progress, setProgress] = useState({
@@ -27,15 +44,15 @@ export const Bar = ({currentTrack}: props) => {
         return `${minutes}:${seconds}`;
     };
 
-
-
     const onTogglePLay = () => {
         if (audioRef.current) {
             if (isPlay) {
                 setIsPlay(false)
+                dispatch(setIsPlaying(false));  // Обновляем Redux-состояние
                 audioRef.current.pause()
             } else {
                 setIsPlay(true)
+                dispatch(setIsPlaying(true));  
                 audioRef.current.play()
             }  
         } 
@@ -70,16 +87,27 @@ export const Bar = ({currentTrack}: props) => {
         }
     };
 
-    const showAlert = () => {
-        alert("Еще не реализовано");
-    };
+    const handleCanPlay = () => {
+        audioRef.current?.play();
+        setIsPlay(true);
+    }
 
+    // const showAlert = () => {
+    //     alert("Еще не реализовано");
+    // };
+
+    if(!currentTrack) {
+        return
+    }
+    
     return (    
-
         <>
         <audio onTimeUpdate={onChangeTime} 
         ref={audioRef} 
-        // controls 
+        onCanPlay={handleCanPlay}
+        autoPlay
+        onEnded={onClickNextTrack}
+        //controls 
         src={currentTrack.track_file} />
         <div className={styles.bar}>
             <div className={styles.barContent}>
@@ -90,7 +118,7 @@ export const Bar = ({currentTrack}: props) => {
                 <ProgressBar 
                 max={progress.duration}
                 value={progress.currentTime}
-                step={1}
+                step={0.1}
                 onChange={onSeek}
                 />
                 {/* <div className={styles.barPlayerProgress}></div> */}
@@ -98,7 +126,7 @@ export const Bar = ({currentTrack}: props) => {
 
                     <div className={styles.barPlayer}>
                         <div className={styles.playerControls}>
-                            <div onClick={showAlert} className={styles.playerBtnPrev}>
+                            <div onClick={onClickPrevTrack} className={styles.playerBtnPrev}>
                                 <svg className={styles.playerBtnPrevSvg}>
                                     <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                                 </svg>
@@ -115,7 +143,7 @@ export const Bar = ({currentTrack}: props) => {
                                     </svg>
                                 )}
                             </div>
-                            <div onClick={showAlert} className={styles.playerBtnNext}>
+                            <div onClick={onClickNextTrack} className={styles.playerBtnNext}>
                                 <svg className={styles.playerBtnNextSvg}>
                                     <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                                 </svg>
@@ -126,7 +154,8 @@ export const Bar = ({currentTrack}: props) => {
                                     <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                                 </svg>
                             </div>
-                            <div onClick={showAlert} className={`${styles.playerBtnShuffle} ${styles.btnIcon}`}>
+                            <div onClick={onToggleShuffle} 
+                            className={`${styles.playerBtnShuffle} ${styles.btnIcon} ${isShuffle ? styles.playerBtnShuffleActive : ''}`}>
                                 <svg className={styles.playerBtnShuffleSvg}>
                                     <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                                 </svg>
