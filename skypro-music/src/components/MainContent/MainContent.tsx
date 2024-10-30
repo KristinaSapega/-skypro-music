@@ -2,7 +2,7 @@
 import { GetTracks } from "@/api/apiTrack";
 import { TrackList } from "../TrackList/TrackList";
 import styles from "./MainContent.module.css";
-import { TrackType } from "@/types";
+//import { TrackType } from "@/types";
 import { useEffect, useState } from "react";
 import Filter from "../Filter/Filter";
 import { useAppDispatch, useAppSelector } from "@/store/store";
