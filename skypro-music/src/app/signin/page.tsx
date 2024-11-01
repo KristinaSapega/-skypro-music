@@ -3,11 +3,11 @@
 import Image from "next/image"
 import styles from "./signin.module.css"
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { loginUser, tokenUser } from "@/store/features/authSlice";
 
-export const Signin = () => {
+ const Signin = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { errorMessage } = useAppSelector(state => state.auth);
@@ -20,6 +20,7 @@ export const Signin = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     if (!formData.email) {
       setError("Введите логин");
@@ -37,12 +38,18 @@ export const Signin = () => {
       await dispatch(loginUser({
         email: formData.email,
         password: formData.password
-      })
-      ), tokenUser({
+      })).unwrap();
+       await dispatch(tokenUser({
         email: formData.email,
-        password: formData.password})
+        password: formData.password
+      })).unwrap();
+
+      router.push("/");
+    }catch (error) {
+      console.error(error)
+      setError("Ошибка при входе в систему. Попробуйте снова.");
     }
-  }
+  };
 
 
 
@@ -55,6 +62,7 @@ export const Signin = () => {
       <div className={styles.containerEnter}>
         <div className={styles.modalBlock}>
           <form
+            onSubmit={handleSignin}
             className={styles.modalFormLogin}
             action="#">
             <a>
@@ -72,6 +80,7 @@ export const Signin = () => {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
+              value={formData.email}
               className={`${styles.modalInput} ${styles.login}`}
               type="text"
               name="login"
@@ -81,6 +90,7 @@ export const Signin = () => {
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
+              value={formData.password}
               className={`${styles.modalInput} ${styles.password}`}
               type="password"
               name="password"
@@ -104,4 +114,4 @@ export const Signin = () => {
 
   )
 }
-
+export default Signin;

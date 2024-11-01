@@ -1,4 +1,4 @@
-const BASE_URL = "https://webdev-music-003b5b991590.herokuapp.com/";
+const BASE_URL = "https://webdev-music-003b5b991590.herokuapp.com";
 
 export type RegisterUserType = {
     email: string;

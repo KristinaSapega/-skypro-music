@@ -1,6 +1,12 @@
 import { TrackType } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+
+// const favoriteTracks = createAsyncThunk("track/favoriteTracks", async (accessToken: string) => {
+//     const favTracks = await 
+
+// })
+
 type initialStateType = {
     currentPlaylist: TrackType[],
     tracks: TrackType[],
@@ -10,6 +16,7 @@ type initialStateType = {
     currentTrack: TrackType | null,
     currentTrackIndex: number,
     defaultTracks: TrackType[],
+    likedTracks: number[],
 }
 
 const initialState: initialStateType = {
@@ -21,10 +28,11 @@ const initialState: initialStateType = {
     currentTrack: null,
     currentTrackIndex: -1,
     defaultTracks: [],
+    likedTracks:[],
 };
 
-const trackSlice = createSlice({
-    name: "track",
+const playlistSlice = createSlice({
+    name: "playlist",
     initialState,
     reducers: {
         // Редьюсер для установки треков
@@ -62,7 +70,22 @@ const trackSlice = createSlice({
         setIsPlaying: (state, action: PayloadAction<boolean>) => { //воспроизводится трек или остановлен
             state.isPlaying = action.payload;
         },
+        likeTrack: (state, action: PayloadAction<number>) => {
+            if (!state.likedTracks.includes(action.payload)) {
+                state.likedTracks.push(action.payload)
+            }
+        },
+        dislikeTrack: (state, action: PayloadAction<number>) => {
+            state.likedTracks = state.likedTracks.filter((_id) => _id !== action.payload)
+        }
+
     },
+
+    // extraReducers: builder => {
+    //     builder.addCase(apiTrack.GetFavoriteTracks.fulfilled, (state, action) => {
+    //         state.likedTracks = action.payload
+    //     })
+    // };
 });
 
 // Экспорт экшенов
@@ -73,9 +96,11 @@ export const {
     setPrevTrack,
     setShuffle,
     setIsShuffle,
-    setIsPlaying } = trackSlice.actions;
+    setIsPlaying,
+    likeTrack,
+    dislikeTrack} = playlistSlice.actions;
 
 // Экспорт редьюсера (экспорт по умолчанию)
-export default trackSlice.reducer;
+export default playlistSlice.reducer;
 
 // export const TrackReducer = trackSlice.reducer;

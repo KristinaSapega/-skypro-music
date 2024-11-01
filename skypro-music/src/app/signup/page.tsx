@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./signup.module.css"
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { newUser } from "@/store/features/authSlice";
 
@@ -80,6 +80,7 @@ const Signup = () => {
                             onChange={(e) =>
                                 setFormData({ ...formData, email: e.target.value })
                             }
+                            value={formData.email}
                             className={`${styles.modalInput} ${styles.login}`}
                             type="text"
                             name="login"
@@ -89,6 +90,7 @@ const Signup = () => {
                             onChange={(e) =>
                                 setFormData({ ...formData, password: e.target.value })
                             }
+                            value={formData.password}
                             className={`${styles.modalInput} ${styles.passwordFirst}`}
                             type="password"
                             name="password"
@@ -98,6 +100,7 @@ const Signup = () => {
                             onChange={(e) =>
                                 setFormData({ ...formData, confirmPassword: e.target.value })
                             }
+                            value={formData.confirmPassword}
                             className={`${styles.modalInput} ${styles.passwordDouble}`}
                             type="password"
                             name="password"
@@ -117,3 +120,4 @@ const Signup = () => {
         </div>
     )
 }
+export default Signup;

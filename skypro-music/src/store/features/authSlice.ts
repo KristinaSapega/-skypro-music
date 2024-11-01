@@ -4,10 +4,10 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type AuthStateType =  {
   authState: boolean;
-  email: string | undefined;
+  email: string;
   password: string | null;
   confirmPassword: string;
-  username: string | undefined;
+  username: string;
   errorMessage: string | undefined;
   tokens: TokensType;
   
@@ -52,6 +52,7 @@ export const tokenUser = createAsyncThunk (
   }
 )
 
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -59,6 +60,14 @@ const authSlice = createSlice({
     setAuthState: (state, action: PayloadAction<boolean>) => {
       state.authState = action.payload;
     },
+    logoutDone: (state) => {
+      state.authState = false
+      state.email = ''
+      state.tokens = {
+        access: '',
+        refresh: '',
+      }
+    }
   },
 
 extraReducers: (builder) => {
@@ -76,6 +85,7 @@ extraReducers: (builder) => {
     state.authState = true
     state.username = action.payload.username
     state.email = action.payload.email
+    localStorage.setItem("username", action.payload.username)
   })
   .addCase(loginUser.rejected, (state, action) => {
     state.errorMessage = action.error.message;
@@ -90,5 +100,5 @@ extraReducers: (builder) => {
 }
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { setAuthState, logoutDone } = authSlice.actions;
 export const authReducer = authSlice.reducer;
