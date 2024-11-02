@@ -31,6 +31,28 @@ export const GetFavoriteTracks = async () => {
     })
 };
 
+export interface LikeTypesProps {
+    _id: number; 
+    token: string;   
+}
+
+export const AddTrackFavorite = async ({_id:id, token}:LikeTypesProps) => {
+    console.log(token)
+    try {
+        const response = await fetch(`${URL}/catalog/track/${id}/favorite/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        return response.json();
+    } catch(error) {
+        if (error instanceof Error)
+        console.error(error.message);
+    }
+}
+
 // Получить трек по id GET
 export const getTrackForId = "/catalog/track/<id>/";
 

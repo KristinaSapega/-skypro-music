@@ -25,11 +25,6 @@ export const Sidebar = () => {
     dispatch(logoutDone())
     router.push("/")
   }
-
-
-
-
-
     return (
         <div className={styles.mainSidebar}>
           <div className={styles.sidebarPersonal}>

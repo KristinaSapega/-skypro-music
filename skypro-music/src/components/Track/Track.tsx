@@ -2,6 +2,7 @@ import { TrackType } from "@/types";
 import styles from "./Track.module.css"
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setIsPlaying, setTrackState } from "@/store/features/trackSlice";
+import { useLikeTrack } from "@/hooks/useLikeTrack";
 
 interface TrackProps {
     track: TrackType
@@ -10,6 +11,7 @@ interface TrackProps {
 
 export const Track: React.FC<TrackProps> = ({track}) => {
     const dispatch = useAppDispatch();
+    const {toggleLike, isLiked} = useLikeTrack(track._id);
 
     const currentTrack = useAppSelector((state) => state.tracksSlice.currentTrack);
     const isPlaying = useAppSelector((state) => state.tracksSlice.isPlaying);
@@ -21,6 +23,8 @@ export const Track: React.FC<TrackProps> = ({track}) => {
         dispatch(setIsPlaying(true));
         
     }
+
+
     return (
 
         <div onClick={onClickTrack} className={styles.playlisTrack}>
@@ -48,9 +52,9 @@ export const Track: React.FC<TrackProps> = ({track}) => {
             <div className={styles.trackAlbum}>
                 <a className={styles.trackAlbumLink} href="http://">{track.album}</a>
             </div>
-            <div className="track__time">
+            <div onClick={toggleLike} className="track__time">
                 <svg className={styles.trackTimeSvg}>
-                    <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
+                    <use xlinkHref={`/img/icon/sprite.svg#icon-${isLiked? "dislike" : "like"}`}></use>
                 </svg>
                 <span className={styles.trackTimeText}>{Math.floor(track.duration_in_seconds/60)} : {Math.floor(track.duration_in_seconds % 60)}</span>
             </div>

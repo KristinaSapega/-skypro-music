@@ -1,11 +1,16 @@
+import { AddTrackFavorite, LikeTypesProps } from "@/api/apiTrack";
 import { TrackType } from "@/types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 // const favoriteTracks = createAsyncThunk("track/favoriteTracks", async (accessToken: string) => {
 //     const favTracks = await 
 
 // })
+
+export const likedFavTrack = createAsyncThunk("track/likeFavTrack", async ({_id, token}:LikeTypesProps) => {
+    return await AddTrackFavorite({_id, token});
+} )
 
 type initialStateType = {
     currentPlaylist: TrackType[],
@@ -81,11 +86,14 @@ const playlistSlice = createSlice({
 
     },
 
-    // extraReducers: builder => {
-    //     builder.addCase(apiTrack.GetFavoriteTracks.fulfilled, (state, action) => {
-    //         state.likedTracks = action.payload
-    //     })
-    // };
+    extraReducers: builder => {
+        builder.addCase(likedFavTrack.fulfilled, (state, action: PayloadAction<number>) => {
+            state.likedTracks.push(action.payload)
+        })
+        // builder.addCase(apiTrack.getFavoriteTracks.fulfilled, (state, action) => {
+        //     state.likedTracks = action.payload
+        // })
+    }
 });
 
 // Экспорт экшенов
