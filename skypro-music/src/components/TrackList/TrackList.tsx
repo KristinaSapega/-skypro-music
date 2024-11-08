@@ -3,13 +3,13 @@ import { Track } from "../Track/Track";
 import styles from "./TrackList.module.css"
 import { useAppSelector } from "@/store/store";
 
-// interface TrackListProps {
-//     setCurrentTrack: (track: TrackType) => void
-// }
+interface TrackListProps {
+    tracks: TrackType[];
+}
 
-export const TrackList: React.FC = () => {
+export const TrackList = ({tracks}:TrackListProps) => {
 
-  const { tracks } = useAppSelector(state => state.tracksSlice);
+  //const { tracks } = useAppSelector(state => state.tracksSlice);
   return (
     <div className={styles.contentPlaylist}>
       {tracks.map((track, index) => (

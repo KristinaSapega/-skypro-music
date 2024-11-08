@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/store/store"
 import {setIsPlaying, setIsShuffle, setNextTrack, setPrevTrack, setShuffle} from "@/store/features/trackSlice"
 
 
-
+//import useLikesTracks 
 export const Bar = () => {
     const {currentTrack, isShuffle} = useAppSelector(state => state.tracksSlice);
     const [isPlay, setIsPlay] = useState(false)

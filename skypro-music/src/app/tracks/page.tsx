@@ -23,7 +23,7 @@ export default function TracksPage () {
               }
         };
         fetchTracks(); 
-      }, []); 
+      }, [dispatch]); 
 
     //   if (error) {
     //     return <div className={styles.errorMessage}>Ошибка: {error}</div>;

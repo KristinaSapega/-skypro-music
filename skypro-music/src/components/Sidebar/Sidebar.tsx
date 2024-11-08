@@ -2,13 +2,17 @@
 
 import Image from "next/image"
 import styles from "./Sidebar.module.css"
-import { useAppDispatch } from "@/store/store"
+import { useAppDispatch, useAppSelector } from "@/store/store"
 import { useEffect, useState } from "react";
 import { logoutDone } from "@/store/features/authSlice";
 import { useRouter } from "next/navigation";
+import { fetchFavoriteTracks } from "@/store/features/trackSlice";
 
 export const Sidebar = () => {
   const dispatch = useAppDispatch();
+  const {tokens} = useAppSelector(state => state.auth);
+   
+
   //const { authState } = useAppSelector((state) => state.auth);
   const [userName, setUsername] = useState<string>("");
   useEffect(() => {
@@ -21,10 +25,20 @@ export const Sidebar = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.clear()
-    dispatch(logoutDone())
-    router.push("/")
+    localStorage.clear();
+    setUsername("");
+    dispatch(logoutDone());
+    router.push("/");
   }
+
+  
+  useEffect(() => {
+    if (tokens.access) {
+      dispatch(fetchFavoriteTracks());
+    }
+   
+  }, [dispatch, tokens]);
+  
     return (
         <div className={styles.mainSidebar}>
           <div className={styles.sidebarPersonal}>

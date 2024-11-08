@@ -94,7 +94,7 @@ export const MainContent = () => {
                 </svg>
               </div>
             </div>
-            <TrackList  />
+            <TrackList tracks={tracks} />
           </div>
         </div>
 

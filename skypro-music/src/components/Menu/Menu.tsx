@@ -17,6 +17,10 @@ export const Menu: React.FC<MenuProps> = ({isMenuOpen}) => {
 
   const router = useRouter();
 
+  const handleFavoritesClick = () => {
+    router.push("/tracks/favorites");
+  };
+
   const handleLogout = () => {
     localStorage.clear()
     dispatch(logoutDone())
@@ -30,7 +34,7 @@ export const Menu: React.FC<MenuProps> = ({isMenuOpen}) => {
             <a href="#" className={styles.menuLink}>Главное</a>
           </li>
           <li className={styles.menuItem}>
-            <a href="#" className={styles.menuLink}>Мой плейлист</a>
+            <a onClick={handleFavoritesClick} className={styles.menuLink}>Мой плейлист</a>
           </li>
           <li className={styles.menuItem}>
            { isAuth ? (<div onClick={handleLogout} className={styles.menuLink}>Выйти</div>) : (<Link href="/signin" className={styles.menuLink}>Войти</Link>)}

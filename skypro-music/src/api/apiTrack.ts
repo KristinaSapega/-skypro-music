@@ -23,12 +23,8 @@ export const GetFavoriteTracks = async () => {
     if(!response.ok) {
         throw new Error ("Данные не получены")
     }
-    return response.json().then((data) => {
-        if (data.error) {
-            throw new Error(data.error)
-        }
-        return data.data;
-    })
+    const data = await response.json();
+    return data.data;
 };
 
 export interface LikeTypesProps {
@@ -36,10 +32,10 @@ export interface LikeTypesProps {
     token: string;   
 }
 
-export const AddTrackFavorite = async ({_id:id, token}:LikeTypesProps) => {
+export const AddTrackFavorite = async ({_id, token}:LikeTypesProps) => {
     console.log(token)
     try {
-        const response = await fetch(`${URL}/catalog/track/${id}/favorite/`, {
+        const response = await fetch(`${URL}/catalog/track/${_id}/favorite/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -52,6 +48,27 @@ export const AddTrackFavorite = async ({_id:id, token}:LikeTypesProps) => {
         console.error(error.message);
     }
 }
+
+export const DeleteTrackFavorite = async ({_id, token}:LikeTypesProps) => {
+    try {
+        const response = await fetch(`${URL}/catalog/track/${_id}/favorite/`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        return response.json();
+    } catch(error) {
+        if (error instanceof Error)
+        console.error(error.message);
+    }
+}
+
+
+
+
+
 
 // Получить трек по id GET
 export const getTrackForId = "/catalog/track/<id>/";

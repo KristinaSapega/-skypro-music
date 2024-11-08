@@ -1,4 +1,4 @@
-import { AddTrackFavorite, LikeTypesProps } from "@/api/apiTrack";
+import { AddTrackFavorite, DeleteTrackFavorite, GetFavoriteTracks, LikeTypesProps } from "@/api/apiTrack";
 import { TrackType } from "@/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -8,9 +8,18 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // })
 
-export const likedFavTrack = createAsyncThunk("track/likeFavTrack", async ({_id, token}:LikeTypesProps) => {
-    return await AddTrackFavorite({_id, token});
-} )
+// export const likedFavTrack = createAsyncThunk("track/likeFavTrack", async ({_id, token}:LikeTypesProps) => {
+//     return await AddTrackFavorite({_id, token});
+// });
+
+// export const dislikedFavTrack = createAsyncThunk("track/dislikeFavTrack", async ({ _id, token }: LikeTypesProps) => {
+//     return await DeleteTrackFavorite({ _id, token });
+// });
+
+export const fetchFavoriteTracks = createAsyncThunk("track/fetchFavorites", async () => {
+    const favoriteTracks = await GetFavoriteTracks();
+    return favoriteTracks.data;
+});
 
 type initialStateType = {
     currentPlaylist: TrackType[],
@@ -22,6 +31,7 @@ type initialStateType = {
     currentTrackIndex: number,
     defaultTracks: TrackType[],
     likedTracks: number[],
+    favoriteTracks: TrackType[],
 }
 
 const initialState: initialStateType = {
@@ -34,6 +44,7 @@ const initialState: initialStateType = {
     currentTrackIndex: -1,
     defaultTracks: [],
     likedTracks:[],
+    favoriteTracks: []
 };
 
 const playlistSlice = createSlice({
@@ -87,12 +98,15 @@ const playlistSlice = createSlice({
     },
 
     extraReducers: builder => {
-        builder.addCase(likedFavTrack.fulfilled, (state, action: PayloadAction<number>) => {
-            state.likedTracks.push(action.payload)
-        })
-        // builder.addCase(apiTrack.getFavoriteTracks.fulfilled, (state, action) => {
-        //     state.likedTracks = action.payload
+        // builder.addCase(likedFavTrack.fulfilled, (state, action: PayloadAction<number>) => {
+        //     state.likedTracks.push(action.payload)
         // })
+        // builder.addCase(dislikedFavTrack.fulfilled, (state, action: PayloadAction<number>) => {
+        //     state.likedTracks = state.likedTracks.filter((_id) => _id !== action.payload);
+        // })
+        builder.addCase(fetchFavoriteTracks.fulfilled, (state, action) => {
+            state.favoriteTracks = action.payload.map((track: TrackType) => track._id
+)});
     }
 });
 
@@ -106,7 +120,8 @@ export const {
     setIsShuffle,
     setIsPlaying,
     likeTrack,
-    dislikeTrack} = playlistSlice.actions;
+    dislikeTrack,
+    } = playlistSlice.actions;
 
 // Экспорт редьюсера (экспорт по умолчанию)
 export default playlistSlice.reducer;
