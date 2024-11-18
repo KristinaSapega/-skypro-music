@@ -10,12 +10,13 @@ interface MenuProps {
 }
 
 export const Menu: React.FC<MenuProps> = ({isMenuOpen}) => {
-
   const dispatch = useAppDispatch();
-
   const isAuth = useAppSelector(state => state.auth.authState)
-
   const router = useRouter();
+
+  const handelMainClick = () => {
+    router.push("/tracks")
+  }
 
   const handleFavoritesClick = () => {
     router.push("/tracks/favorites");
@@ -31,7 +32,7 @@ export const Menu: React.FC<MenuProps> = ({isMenuOpen}) => {
         <div className={`${styles.navMenu} ${isMenuOpen ? styles.open : ''}`}>
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
-            <a href="#" className={styles.menuLink}>Главное</a>
+            <a onClick={handelMainClick} className={styles.menuLink}>Главное</a>
           </li>
           <li className={styles.menuItem}>
             <a onClick={handleFavoritesClick} className={styles.menuLink}>Мой плейлист</a>

@@ -8,13 +8,16 @@ import { TrackList } from "@/components/TrackList/TrackList";
 
 export default function Favorites() {
   const dispatch = useAppDispatch();
-  const { favoriteTracks } = useAppSelector((state) => state.tracksSlice);
-  const {tokens, username: user} = useAppSelector(state => state.auth);
-   
+  const { tokens } = useAppSelector(state => state.auth);
+  //const { favoriteTracks } = useAppSelector((state) => state.tracksSlice); // Извлекаем список избранных треков
+  const tracks = useAppSelector((state) => state.tracksSlice.tracks); 
+  const likedTracks = useAppSelector((state) => state.tracksSlice.likedTracks);
 
+  const filteredFavoriteTracks = tracks.filter((track) => likedTracks.includes(track._id));
+   
   useEffect(() => {
     if (tokens.access) {
-      dispatch(fetchFavoriteTracks());
+      dispatch(fetchFavoriteTracks()); // Загружаем избранные треки с сервера
     }
    
   }, [dispatch, tokens]);
@@ -23,7 +26,7 @@ export default function Favorites() {
     <div className={styles.mainCenterblock}>
             <h2 className={styles.centerblockH2}>Мои треки</h2>
             <div className={`${styles.centerblockContent} ${styles.playlistContent}`}>
-                <TrackList tracks={favoriteTracks} />
+                <TrackList tracks={filteredFavoriteTracks} />
             </div>
         </div>
     );
