@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function TracksPage () {
     const dispatch = useAppDispatch();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [error, setError] = useState('');
     useEffect(() => {
         const fetchTracks = async () => {

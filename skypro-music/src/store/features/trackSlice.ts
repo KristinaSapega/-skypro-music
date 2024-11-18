@@ -1,11 +1,10 @@
-import { AddTrackFavorite, DeleteTrackFavorite, GetFavoriteTracks, LikeTypesProps } from "@/api/apiTrack";
+import { GetFavoriteTracks } from "@/api/apiTrack";
 import { TrackType } from "@/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 // const favoriteTracks = createAsyncThunk("track/favoriteTracks", async (accessToken: string) => {
 //     const favTracks = await 
-
 // })
 
 // export const likedFavTrack = createAsyncThunk("track/likeFavTrack", async ({_id, token}:LikeTypesProps) => {
@@ -125,5 +124,3 @@ export const {
 
 // Экспорт редьюсера (экспорт по умолчанию)
 export default playlistSlice.reducer;
-
-// export const TrackReducer = trackSlice.reducer;
