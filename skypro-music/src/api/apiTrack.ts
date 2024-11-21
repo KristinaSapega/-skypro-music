@@ -65,20 +65,18 @@ export const DeleteTrackFavorite = async ({_id, token}:LikeTypesProps) => {
     }
 }
 
+export const GetSelectionById = async (id: string):Promise<{ tracks: TrackType[] }> => {
+    const response = await fetch(`${URL}/catalog/selection/${id}/`);
+    if (!response.ok) {
+        throw new Error("Ошибка при загрузке подборки");
+    }
+    return response.json();
+};
 
 
 
 
 
-// Получить трек по id GET
-export const getTrackForId = "/catalog/track/<id>/";
-
-
-// Добавить трек в избранное по id POST *
-export const addFavoritesForId = "/catalog/track/favorite/all/";
-
-// Удалить трек из избранного по id DELETE *
-export const dellFavoritesForId = "/catalog/track/<id>/favorite/";
 
 // Создать подборкy POST *
 export const addSelection = "/catalog/selection";

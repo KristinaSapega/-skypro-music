@@ -1,12 +1,12 @@
 "use client"
-import { GetTracks } from "@/api/apiTrack";
+//import { GetTracks } from "@/api/apiTrack";
 import { TrackList } from "../TrackList/TrackList";
 import styles from "./MainContent.module.css";
 //import { TrackType } from "@/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Filter from "../Filter/Filter";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setTracks } from "@/store/features/trackSlice";
+import {  useAppSelector } from "@/store/store";
+//import { setTracks } from "@/store/features/trackSlice";
 
 
 

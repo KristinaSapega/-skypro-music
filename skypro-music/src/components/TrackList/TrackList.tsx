@@ -1,7 +1,6 @@
 import { TrackType } from "@/types";
 import { Track } from "../Track/Track";
 import styles from "./TrackList.module.css"
-import { useAppSelector } from "@/store/store";
 
 interface TrackListProps {
     tracks: TrackType[];
