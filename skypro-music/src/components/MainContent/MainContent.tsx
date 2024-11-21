@@ -2,7 +2,7 @@
 import { GetTracks } from "@/api/apiTrack";
 import { TrackList } from "../TrackList/TrackList";
 import styles from "./MainContent.module.css";
-import { TrackType } from "@/types";
+//import { TrackType } from "@/types";
 import { useEffect, useState } from "react";
 import Filter from "../Filter/Filter";
 import { useAppDispatch, useAppSelector } from "@/store/store";
@@ -12,27 +12,27 @@ import { setTracks } from "@/store/features/trackSlice";
 
 export const MainContent = () => {
     // const [tracks, setTracks] = useState<TrackType[]>([]);
-    const [error, setError] = useState<string | null>(null);
+    //const [error, setError] = useState<string | null>(null);
     const [openFilter, setOpenFilter] = useState<string | null>(null);
 
-    const dispatch = useAppDispatch(); 
+    //const dispatch = useAppDispatch(); 
     const {tracks} = useAppSelector((state) => state.tracksSlice) ;
 
-    useEffect(() => {
-    const fetchTracks = async () => {
-        try {
-            const data = await GetTracks();
-            console.log("API Data:", data);
-            // setTracks(data);
-            dispatch(setTracks(data)); // Диспатчим данные треков в Redux
-        }catch (error) {
-            if(error instanceof Error) {
-                setError(error.message)
-              }
-          }
-    };
-    fetchTracks(); 
-  }, []); 
+  //   useEffect(() => {
+  //   const fetchTracks = async () => {
+  //       try {
+  //           const data = await GetTracks();
+  //           console.log("API Data:", data);
+  //           // setTracks(data);
+  //           dispatch(setTracks(data)); // Диспатчим данные треков в Redux
+  //       }catch (error) {
+  //           if(error instanceof Error) {
+  //               setError(error.message)
+  //             }
+  //         }
+  //   };
+  //   fetchTracks(); 
+  // }, []); 
 
   const uniqueAuthors = Array.from(new Set(tracks.map((track) => track.author)));
   const uniqueGenres = Array.from(new Set(tracks.flatMap((track) => track.genre)));
@@ -48,9 +48,9 @@ export const MainContent = () => {
     }
   };
 
-  if (error) {
-    return <div className={styles.errorMessage}>Ошибка: {error}</div>;
-  }
+  // if (error) {
+  //   return <div className={styles.errorMessage}>Ошибка: {error}</div>;
+  // }
     return (
         <div className={styles.mainCenterblock}>
           <div className={styles.centerblockSearch}>
@@ -94,7 +94,7 @@ export const MainContent = () => {
                 </svg>
               </div>
             </div>
-            <TrackList  />
+            <TrackList tracks={tracks} />
           </div>
         </div>
 

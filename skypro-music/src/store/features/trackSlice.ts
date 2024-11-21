@@ -1,5 +1,24 @@
+import { GetFavoriteTracks } from "@/api/apiTrack";
 import { TrackType } from "@/types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+
+// const favoriteTracks = createAsyncThunk("track/favoriteTracks", async (accessToken: string) => {
+//     const favTracks = await 
+// })
+
+// export const likedFavTrack = createAsyncThunk("track/likeFavTrack", async ({_id, token}:LikeTypesProps) => {
+//     return await AddTrackFavorite({_id, token});
+// });
+
+// export const dislikedFavTrack = createAsyncThunk("track/dislikeFavTrack", async ({ _id, token }: LikeTypesProps) => {
+//     return await DeleteTrackFavorite({ _id, token });
+// });
+
+export const fetchFavoriteTracks = createAsyncThunk("track/fetchFavorites", async () => {
+    const favoriteTracks = await GetFavoriteTracks();
+    return favoriteTracks.data;
+});
 
 type initialStateType = {
     currentPlaylist: TrackType[],
@@ -10,6 +29,8 @@ type initialStateType = {
     currentTrack: TrackType | null,
     currentTrackIndex: number,
     defaultTracks: TrackType[],
+    likedTracks: number[],
+    favoriteTracks: TrackType[],
 }
 
 const initialState: initialStateType = {
@@ -21,10 +42,12 @@ const initialState: initialStateType = {
     currentTrack: null,
     currentTrackIndex: -1,
     defaultTracks: [],
+    likedTracks:[],
+    favoriteTracks: []
 };
 
-const trackSlice = createSlice({
-    name: "track",
+const playlistSlice = createSlice({
+    name: "playlist",
     initialState,
     reducers: {
         // Редьюсер для установки треков
@@ -62,7 +85,28 @@ const trackSlice = createSlice({
         setIsPlaying: (state, action: PayloadAction<boolean>) => { //воспроизводится трек или остановлен
             state.isPlaying = action.payload;
         },
+        likeTrack: (state, action: PayloadAction<number>) => {
+            if (!state.likedTracks.includes(action.payload)) {
+                state.likedTracks.push(action.payload)
+            }
+        },
+        dislikeTrack: (state, action: PayloadAction<number>) => {
+            state.likedTracks = state.likedTracks.filter((_id) => _id !== action.payload)
+        }
+
     },
+
+    extraReducers: builder => {
+        // builder.addCase(likedFavTrack.fulfilled, (state, action: PayloadAction<number>) => {
+        //     state.likedTracks.push(action.payload)
+        // })
+        // builder.addCase(dislikedFavTrack.fulfilled, (state, action: PayloadAction<number>) => {
+        //     state.likedTracks = state.likedTracks.filter((_id) => _id !== action.payload);
+        // })
+        builder.addCase(fetchFavoriteTracks.fulfilled, (state, action) => {
+            state.favoriteTracks = action.payload.map((track: TrackType) => track._id
+)});
+    }
 });
 
 // Экспорт экшенов
@@ -73,9 +117,10 @@ export const {
     setPrevTrack,
     setShuffle,
     setIsShuffle,
-    setIsPlaying } = trackSlice.actions;
+    setIsPlaying,
+    likeTrack,
+    dislikeTrack,
+    } = playlistSlice.actions;
 
 // Экспорт редьюсера (экспорт по умолчанию)
-export default trackSlice.reducer;
-
-// export const TrackReducer = trackSlice.reducer;
+export default playlistSlice.reducer;
