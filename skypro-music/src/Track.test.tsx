@@ -47,13 +47,11 @@ const setup = () =>
     </Provider>
     )
     
-
-
 describe("Track", () => {
     (useLikeTrack as jest.Mock).mockReturnValue({isLiked: false, toggleLike: jest.fn()});
     (useAppSelector as jest.Mock).mockImplementation((selector) => 
         selector({tracksSlice: {
-            currentTrack: null, // Или укажите объект, если нужно
+            currentTrack: null, 
             isPlaying: false,
         },}));
     const dispatch = jest.fn();
