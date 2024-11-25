@@ -166,7 +166,11 @@ export const MainContent = () => {
             </svg>
           </div>
         </div>
-        <TrackList tracks={filteredTracks} />
+        {filteredTracks.length > 0 ? (
+          <TrackList tracks={filteredTracks} />
+        ) : (
+          <div className={styles.noTracks}>Треки не найдены</div>
+        )}
       </div>
     </div>
 
