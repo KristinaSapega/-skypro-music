@@ -12,12 +12,12 @@ export const MainContent = () => {
   const [sortOption, setSortOption] = useState<string | null>("default"); //сортировка
   const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]); //авторы
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]); //жанры
-  const [selectedYears, setSelectedYears] = useState<string[]>([]); //года\ выпуска
+  //const [selectedYears, setSelectedYears] = useState<string[]>([]); //года\ выпуска
 
   const uniqueAuthors = useMemo(() => Array.from(new Set(tracks.map((track) => track.author))), [tracks]);
   const uniqueGenres = useMemo(() => Array.from(new Set(tracks.flatMap((track) => track.genre))), [tracks]);
-  const uniqueReleaseDate = useMemo(() => Array.from(new Set(tracks.map((track) => new Date(track.release_date).getFullYear().toString()))), [tracks]);
-  console.log(tracks.map((track) => track.genre));
+  // const uniqueReleaseDate = useMemo(() => Array.from(new Set(tracks.map((track) => new Date(track.release_date).getFullYear().toString()))), [tracks]);
+  // console.log(tracks.map((track) => track.genre));
 
 
   const toggleFilter = (filterType: string) => {
@@ -40,19 +40,20 @@ export const MainContent = () => {
     );
   };
 
-  const toggleYear = (year: string) => {
-    setSelectedYears((prev) =>
-      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
-    );
-  };
+  // const toggleYear = (year: string) => {
+  //   setSelectedYears((prev) =>
+  //     prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
+  //   );
+  // };
 
   const handleSort = (option: string) => {
     setSortOption(option);
+    setOpenFilter(null);
   };
 
   // Фильтрация, поиск и сортировка
   const filteredTracks = useMemo(() => {
-    let result = tracks;
+    let result = [...tracks];
 
     // Поиск по ключевому слову
     if (searchQuery) {
@@ -77,11 +78,11 @@ export const MainContent = () => {
     }
 
     // Фильтрация по году выпуска
-    if (selectedYears.length > 0) {
-      result = result.filter((track) =>
-        selectedYears.includes(new Date(track.release_date).getFullYear().toString())
-      );
-    }
+    // if (selectedYears.length > 0) {
+    //   result = result.filter((track) =>
+    //     selectedYears.includes(new Date(track.release_date).getFullYear().toString())
+    //   );
+    // }
 
     // Сортировка
     if (sortOption === "new") {
@@ -91,7 +92,7 @@ export const MainContent = () => {
     }
 
     return result;
-  }, [tracks, searchQuery, selectedAuthors, selectedGenres, selectedYears, sortOption]);
+  }, [tracks, searchQuery, selectedAuthors, selectedGenres, sortOption]);
 
 
 
@@ -126,6 +127,48 @@ export const MainContent = () => {
             />
           )}
         </div>
+        {/* <div
+          className={`${styles.filterButton} ${openFilter === "releaseDate" ? styles.active : ""
+            }`}
+          onClick={() => toggleFilter("releaseDate")}
+        >
+          году выпуска
+          {openFilter === "releaseDate" && (
+            <Filter
+              filterList={uniqueReleaseDate}
+              onItemClick={toggleYear}
+              selectedItems={selectedYears}
+            />
+          )}
+        </div> */}
+        <div
+          className={`${styles.filterButton} ${openFilter === "releaseDate" ? styles.active : ""}`}
+          onClick={() => toggleFilter("releaseDate")}
+        >
+          году выпуска
+          {openFilter === "releaseDate" && (
+            <div className={styles.filterList}>
+              <div
+                className={`${styles.filterItem} ${sortOption === "default" ? styles.active : ""}`}
+                onClick={() => handleSort("default")}
+              >
+                По умолчанию
+              </div>
+              <div
+                className={`${styles.filterItem} ${sortOption === "new" ? styles.active : ""}`}
+                onClick={() => handleSort("new")}
+              >
+                Сначала новые
+              </div>
+              <div
+                className={`${styles.filterItem} ${sortOption === "old" ? styles.active : ""}`}
+                onClick={() => handleSort("old")}
+              >
+                Сначала старые
+              </div>
+            </div>
+          )}
+        </div>
         <div
           className={`${styles.filterButton} ${openFilter === "genre" ? styles.active : ""
             }`}
@@ -137,20 +180,6 @@ export const MainContent = () => {
               filterList={uniqueGenres}
               onItemClick={toggleGenre}
               selectedItems={selectedGenres}
-            />
-          )}
-        </div>
-        <div
-          className={`${styles.filterButton} ${openFilter === "releaseDate" ? styles.active : ""
-            }`}
-          onClick={() => toggleFilter("releaseDate")}
-        >
-          году выпуска
-          {openFilter === "releaseDate" && (
-            <Filter
-              filterList={uniqueReleaseDate}
-              onItemClick={toggleYear}
-              selectedItems={selectedYears}
             />
           )}
         </div>
