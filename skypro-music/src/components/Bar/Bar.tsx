@@ -192,7 +192,7 @@ export const Bar = () => {
                                     >
                                         <svg className={styles.trackPlayLikeSvg}>
                                         <use
-                                                xlinkHref={`/img/icon/sprite.svg#icon-${isLiked ? "dislike" : "like"
+                                                xlinkHref={`/img/icon/sprite.svg#icon-${isLiked ? "like" : "dislike"
                                                     }`}
                                             ></use>
                                         </svg>

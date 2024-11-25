@@ -54,7 +54,7 @@ export const Track: React.FC<TrackProps> = ({track}) => {
             </div>
             <div onClick={toggleLike} className="track__time">
                 <svg className={styles.trackTimeSvg}>
-                    <use xlinkHref={`/img/icon/sprite.svg#icon-${isLiked? "dislike" : "like"}`}></use>
+                    <use xlinkHref={`/img/icon/sprite.svg#icon-${isLiked? "like" : "dislike"}`}></use>
                 </svg>
                 <span className={styles.trackTimeText}>{Math.floor(track.duration_in_seconds/60)} : {Math.floor(track.duration_in_seconds % 60)}</span>
             </div>

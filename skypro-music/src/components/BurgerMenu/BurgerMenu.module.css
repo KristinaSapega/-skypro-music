@@ -1,4 +1,7 @@
 .navBurger {
+  appearance: none;
+  border: none;
+  background-color: transparent;
     width: 20px;
     height: 36px;
     padding: 13px 0;

@@ -1,4 +1,3 @@
-import { useAppSelector } from "@/store/store";
 import styles from "./filter.module.css";
 
 interface FilterProp {

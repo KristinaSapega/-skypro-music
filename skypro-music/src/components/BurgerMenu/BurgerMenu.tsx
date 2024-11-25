@@ -7,11 +7,11 @@ interface BurgerMenuProps {
 
 export const BurgerMenu: React.FC<BurgerMenuProps> = ({toggleMenu}) => {
     return (
-        <div className={styles.navBurger} onClick={toggleMenu}>
+        <button className={styles.navBurger} onClick={toggleMenu}>
       <span className={styles.burgerLine}></span>
       <span className={styles.burgerLine}></span>
       <span className={styles.burgerLine}></span>
-    </div>
+    </button>
     );
 }
  

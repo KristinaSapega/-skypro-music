@@ -10,8 +10,8 @@ import { fetchFavoriteTracks } from "@/store/features/trackSlice";
 
 export const Sidebar = () => {
   const dispatch = useAppDispatch();
-  const {tokens} = useAppSelector(state => state.auth);
-   
+  const { tokens } = useAppSelector(state => state.auth);
+
 
   //const { authState } = useAppSelector((state) => state.auth);
   const [userName, setUsername] = useState<string>("");
@@ -31,39 +31,49 @@ export const Sidebar = () => {
     router.push("/");
   }
 
-  
+  const handleSelectionClick = (id: number) => {
+    router.push(`/tracks/selections/${id}`);
+  };
+
+
   useEffect(() => {
     if (tokens.access) {
       dispatch(fetchFavoriteTracks());
     }
-   
+
   }, [dispatch, tokens]);
-  
-    return (
-        <div className={styles.mainSidebar}>
-          <div className={styles.sidebarPersonal}>
-            <p className={styles.sidebarPersonalName}>{userName || "Гость"}</p>
-            <div onClick={handleLogout} className={styles.sidebarIcon}>
-              <svg>
-                <use xlinkHref="/img/icon/sprite.svg#logout"></use>
-              </svg>
-            </div>
-          </div>
-          <div className={styles.sidebarBlock}>
-            <div className={styles.sidebarList}>
-              <div className={styles.sidebarItem}>
-                <a className={styles.sidebarLink} href="#">
-                  <Image
-                    className={styles.sidebarImg}
-                    src="/img/playlist01.png"
-                    alt="day's playlist"
-                    width={250}
-                    height={170}
-                  />
-                </a>
+
+  return (
+    <div className={styles.mainSidebar}>
+      <div className={styles.sidebarPersonal}>
+        <p className={styles.sidebarPersonalName}>{userName || "Гость"}</p>
+        <div onClick={handleLogout} className={styles.sidebarIcon}>
+          <svg>
+            <use xlinkHref="/img/icon/sprite.svg#logout"></use>
+          </svg>
+        </div>
+      </div>
+      <div className={styles.sidebarBlock}>
+        <div className={styles.sidebarList}>
+          {[1, 2, 3].map((id) => (
+            <div key={id} className={styles.sidebarItem}
+            onClick={() => handleSelectionClick(id)}
+            >
+
+              <div className={styles.sidebarLink}>
+                <Image
+                  className={styles.sidebarImg}
+                  src={`/img/playlist0${id}.png`}
+                  alt={`Подборка ${id}`}
+                  width={250}
+                  height={170}
+                />
               </div>
-              <div className={styles.sidebarItem}>
-                <a className={styles.sidebarLink} href="#">
+            </div>
+          ))}
+        </div>
+        {/* <div className={styles.sidebarItem}>
+                <a className={styles.sidebarLink} href={`/tracks/selections/${id}`}>
                   <Image
                     className={styles.sidebarImg}
                     src="/img/playlist02.png"
@@ -72,9 +82,9 @@ export const Sidebar = () => {
                     height={170}
                   />
                 </a>
-              </div>
-              <div className={styles.sidebarItem}>
-                <a className={styles.sidebarLink} href="#">
+              </div> */}
+        {/* <div className={styles.sidebarItem}>
+                <a className={styles.sidebarLink} href={`/tracks/selections/${id}`}>
                   <Image
                     className={styles.sidebarImg}
                     src="/img/playlist03.png"
@@ -83,9 +93,8 @@ export const Sidebar = () => {
                     height={170}
                   />
                 </a>
-              </div>
-            </div>
-          </div>
-        </div>
-    )
+              </div> */}
+      </div>
+    </div>
+  )
 }
