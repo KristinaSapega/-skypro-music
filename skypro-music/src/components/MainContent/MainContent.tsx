@@ -119,6 +119,9 @@ export const MainContent = () => {
           onClick={() => toggleFilter("author")}
         >
           исполнителю
+          {selectedAuthors.length > 0 && (
+            <div className={styles.filterTab}>{selectedAuthors.length}</div>
+          )}
           {openFilter === "author" && (
             <Filter
               filterList={uniqueAuthors}
@@ -175,6 +178,9 @@ export const MainContent = () => {
           onClick={() => toggleFilter("genre")}
         >
           жанру
+          {selectedGenres.length > 0 && (
+            <div className={styles.filterTab}>{selectedGenres.length}</div>
+          )}
           {openFilter === "genre" && (
             <Filter
               filterList={uniqueGenres}
