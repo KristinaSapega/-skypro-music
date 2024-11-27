@@ -1,7 +1,7 @@
 "use client"
 import { TrackList } from "../TrackList/TrackList";
 import styles from "./MainContent.module.css";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Filter from "../Filter/Filter";
 import { useAppSelector } from "@/store/store";
 
@@ -12,7 +12,7 @@ export const MainContent = () => {
   const [sortOption, setSortOption] = useState<string | null>("default"); //сортировка
   const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]); //авторы
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]); //жанры
-  //const [selectedYears, setSelectedYears] = useState<string[]>([]); //года\ выпуска
+  //const [selectedYears, setSelectedYears] = useState<string[]>([]); //год выпуска
 
   const uniqueAuthors = useMemo(() => Array.from(new Set(tracks.map((track) => track.author))), [tracks]);
   const uniqueGenres = useMemo(() => Array.from(new Set(tracks.flatMap((track) => track.genre))), [tracks]);
@@ -20,25 +20,30 @@ export const MainContent = () => {
   // console.log(tracks.map((track) => track.genre));
 
 
-  const toggleFilter = (filterType: string) => {
-    if (openFilter === filterType) {
-      setOpenFilter(null);
-    } else {
-      setOpenFilter(filterType);
-    }
-  };
+  const toggleFilter = useCallback(
+    (filterType: string) => {
+      setOpenFilter((prev) => (prev === filterType ? null : filterType));
+    },
+    []
+  );
 
-  const toggleAuthor = (author: string) => {
-    setSelectedAuthors((prev) =>
-      prev.includes(author) ? prev.filter((a) => a !== author) : [...prev, author]
-    );
-  };
+  const toggleAuthor = useCallback(
+    (author: string) => {
+      setSelectedAuthors((prev) =>
+        prev.includes(author) ? prev.filter((a) => a !== author) : [...prev, author]
+      );
+    },
+    []
+  );
 
-  const toggleGenre = (genre: string) => {
-    setSelectedGenres((prev) =>
-      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
-    );
-  };
+  const toggleGenre = useCallback(
+    (genre: string) => {
+      setSelectedGenres((prev) =>
+        prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
+      );
+    },
+    []
+  );
 
   // const toggleYear = (year: string) => {
   //   setSelectedYears((prev) =>
@@ -46,10 +51,13 @@ export const MainContent = () => {
   //   );
   // };
 
-  const handleSort = (option: string) => {
-    setSortOption(option);
-    setOpenFilter(null);
-  };
+  const handleSort = useCallback(
+    (option: string) => {
+      setSortOption(option);
+      setOpenFilter(null);
+    },
+    []
+  );
 
   // Фильтрация, поиск и сортировка
   const filteredTracks = useMemo(() => {

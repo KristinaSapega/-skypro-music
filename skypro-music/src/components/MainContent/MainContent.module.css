@@ -215,7 +215,6 @@
     width: 221px;
     height: 196px;
     padding-top: 20px;
-    
   }
   
   .filterItem {
@@ -229,10 +228,12 @@
   
   .filterItem:hover {
     color: #b672ff;
+    text-decoration: underline;
   }
   
   .filterItem.active {
     color: #b672ff;
+    text-decoration: underline;
   }
 
   .filterTab {
@@ -249,11 +250,6 @@
     font-size: 12px;
     font-weight: bold;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для таба */
+    
   }
   
-  
-  .filterItem.active {
-    color: #b672ff;
-    font-weight: bold;
-  }
