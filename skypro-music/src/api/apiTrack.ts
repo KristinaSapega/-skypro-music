@@ -21,6 +21,7 @@ export const GetFavoriteTracks = async () => {
         }
     });
     if (!response.ok) {
+        console.error("Ошибка запроса:", response.status, response.statusText);
         throw new Error("Данные не получены")
     }
     const data = await response.json();
@@ -60,7 +61,7 @@ export const DeleteTrackFavorite = async ({ _id, token }: LikeTypesProps) => {
         });
         return response.json();
     } catch (error) {
-        if (error instanceof Error)
+        if (error instanceof Error) 
             console.error(error.message);
     }
 }

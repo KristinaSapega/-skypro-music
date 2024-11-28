@@ -52,11 +52,14 @@ export const Track: React.FC<TrackProps> = ({track}) => {
             <div className={styles.trackAlbum}>
                 <a className={styles.trackAlbumLink} href="http://">{track.album}</a>
             </div>
-            <div onClick={toggleLike} className="track__time">
+            <div onClick={toggleLike} className={`${styles.trackTime} ${isLiked ? styles.liked : ""}`}>
                 <svg className={styles.trackTimeSvg}>
-                    <use xlinkHref={`/img/icon/sprite.svg#icon-${isLiked? "like" : "dislike"}`}></use>
+                    <use xlinkHref={`/img/icon/sprite.svg#icon-${isLiked ? "like" : "dislike"}`}></use>
                 </svg>
-                <span className={styles.trackTimeText}>{Math.floor(track.duration_in_seconds/60)} : {Math.floor(track.duration_in_seconds % 60)}</span>
+                <span className={styles.trackTimeText}>
+                    {Math.floor(track.duration_in_seconds / 60)} :{" "}
+                    {Math.floor(track.duration_in_seconds % 60)}
+                </span>
             </div>
         </div>
     );
