@@ -133,7 +133,8 @@ export const Bar = () => {
                                         <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                                     </svg>
                                 </div>
-                                <div onClick={onTogglePLay} className={`${styles.playerBtnPlay} ${styles.btn}`}>
+                                <div role="button" aria-label="Play"
+                                onClick={onTogglePLay} className={`${styles.playerBtnPlay} ${styles.btn}`}>
                                     {isPlay ? (
                                         <svg width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <rect x="0" y="0" width="5" height="20" fill="#D9D9D9" />
@@ -156,7 +157,8 @@ export const Bar = () => {
                                         <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                                     </svg>
                                 </div>
-                                <div onClick={onToggleShuffle}
+                                <div role="button" aria-label="Shuffle"
+                                onClick={onToggleShuffle}
                                     className={`${styles.playerBtnShuffle} ${styles.btnIcon} ${isShuffle ? styles.playerBtnShuffleActive : ''}`}>
                                     <svg className={styles.playerBtnShuffleSvg}>
                                         <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
@@ -214,7 +216,8 @@ export const Bar = () => {
                                     <input onChange={onChangeVolume}
                                         className={`${styles.volumeProgressLine} ${styles.btn}`}
                                         type="range"
-                                        name="range" />
+                                        name="range" 
+                                        aria-label="Volume"/>
                                 </div>
                             </div>
                         </div>
