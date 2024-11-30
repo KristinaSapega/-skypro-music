@@ -1,10 +1,8 @@
 "use client"
-//import { TrackType } from "@/types"
 import styles from "./Bar.module.css"
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
 import ProgressBar from "../ProgressBar/ProgressBar"
 import { useAppDispatch, useAppSelector } from "@/store/store"
-//import { current } from "@reduxjs/toolkit"
 import { setIsPlaying, setIsShuffle, setNextTrack, setPrevTrack, setShuffle } from "@/store/features/trackSlice"
 import { useLikeTrack } from "@/hooks/useLikeTrack"
 
@@ -63,7 +61,6 @@ export const Bar = () => {
     const onToggleLoop = () => {
         if (audioRef.current) {
             SetIsLoop(!isLoop);
-            console.log('Loop toggled:', !isLoop);
             audioRef.current.loop = !isLoop;
         }
     };
@@ -123,7 +120,6 @@ export const Bar = () => {
                         step={0.1}
                         onChange={onSeek}
                     />
-                    {/* <div className={styles.barPlayerProgress}></div> */}
                     <div className={styles.barPlayerBlock}>
 
                         <div className={styles.barPlayer}>
@@ -200,7 +196,6 @@ export const Bar = () => {
                                         </svg>
                                     </div>
                                     <div className={`${styles.barVolumeBlock} ${styles.volume}`}>
-                                        {/* <svg className={styles.trackPlayDislikeSvg}></svg> */}
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { TrackList } from "../TrackList/TrackList";
 import styles from "./MainContent.module.css";
 import { useCallback, useMemo, useState } from "react";
@@ -12,52 +12,38 @@ export const MainContent = () => {
   const [sortOption, setSortOption] = useState<string | null>("default"); //сортировка
   const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]); //авторы
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]); //жанры
-  //const [selectedYears, setSelectedYears] = useState<string[]>([]); //год выпуска
 
-  const uniqueAuthors = useMemo(() => Array.from(new Set(tracks.map((track) => track.author))), [tracks]);
-  const uniqueGenres = useMemo(() => Array.from(new Set(tracks.flatMap((track) => track.genre))), [tracks]);
-  // const uniqueReleaseDate = useMemo(() => Array.from(new Set(tracks.map((track) => new Date(track.release_date).getFullYear().toString()))), [tracks]);
-  // console.log(tracks.map((track) => track.genre));
-
-
-  const toggleFilter = useCallback(
-    (filterType: string) => {
-      setOpenFilter((prev) => (prev === filterType ? null : filterType));
-    },
-    []
+  const uniqueAuthors = useMemo(
+    () => Array.from(new Set(tracks.map((track) => track.author))),
+    [tracks]
+  );
+  const uniqueGenres = useMemo(
+    () => Array.from(new Set(tracks.flatMap((track) => track.genre))),
+    [tracks]
   );
 
-  const toggleAuthor = useCallback(
-    (author: string) => {
-      setSelectedAuthors((prev) =>
-        prev.includes(author) ? prev.filter((a) => a !== author) : [...prev, author]
-      );
-    },
-    []
-  );
+  const toggleFilter = useCallback((filterType: string) => {
+    setOpenFilter((prev) => (prev === filterType ? null : filterType));
+  }, []);
 
-  const toggleGenre = useCallback(
-    (genre: string) => {
-      setSelectedGenres((prev) =>
-        prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
-      );
-    },
-    []
-  );
+  const toggleAuthor = useCallback((author: string) => {
+    setSelectedAuthors((prev) =>
+      prev.includes(author)
+        ? prev.filter((a) => a !== author)
+        : [...prev, author]
+    );
+  }, []);
 
-  // const toggleYear = (year: string) => {
-  //   setSelectedYears((prev) =>
-  //     prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
-  //   );
-  // };
+  const toggleGenre = useCallback((genre: string) => {
+    setSelectedGenres((prev) =>
+      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
+    );
+  }, []);
 
-  const handleSort = useCallback(
-    (option: string) => {
-      setSortOption(option);
-      setOpenFilter(null);
-    },
-    []
-  );
+  const handleSort = useCallback((option: string) => {
+    setSortOption(option);
+    setOpenFilter(null);
+  }, []);
 
   // Фильтрация, поиск и сортировка
   const filteredTracks = useMemo(() => {
@@ -85,24 +71,23 @@ export const MainContent = () => {
       );
     }
 
-    // Фильтрация по году выпуска
-    // if (selectedYears.length > 0) {
-    //   result = result.filter((track) =>
-    //     selectedYears.includes(new Date(track.release_date).getFullYear().toString())
-    //   );
-    // }
-
     // Сортировка
     if (sortOption === "new") {
-      result = result.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
+      result = result.sort(
+        (a, b) =>
+          new Date(b.release_date).getTime() -
+          new Date(a.release_date).getTime()
+      );
     } else if (sortOption === "old") {
-      result = result.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+      result = result.sort(
+        (a, b) =>
+          new Date(a.release_date).getTime() -
+          new Date(b.release_date).getTime()
+      );
     }
 
     return result;
   }, [tracks, searchQuery, selectedAuthors, selectedGenres, sortOption]);
-
-
 
   return (
     <div className={styles.mainCenterblock}>
@@ -122,8 +107,9 @@ export const MainContent = () => {
       <div className={styles.centerblockFilter}>
         <div className={styles.filterTitle}>Искать по:</div>
         <div
-          className={`${styles.filterButton} ${openFilter === "author" ? styles.active : ""
-            }`}
+          className={`${styles.filterButton} ${
+            openFilter === "author" ? styles.active : ""
+          }`}
           onClick={() => toggleFilter("author")}
         >
           исполнителю
@@ -138,41 +124,35 @@ export const MainContent = () => {
             />
           )}
         </div>
-        {/* <div
-          className={`${styles.filterButton} ${openFilter === "releaseDate" ? styles.active : ""
-            }`}
-          onClick={() => toggleFilter("releaseDate")}
-        >
-          году выпуска
-          {openFilter === "releaseDate" && (
-            <Filter
-              filterList={uniqueReleaseDate}
-              onItemClick={toggleYear}
-              selectedItems={selectedYears}
-            />
-          )}
-        </div> */}
         <div
-          className={`${styles.filterButton} ${openFilter === "releaseDate" ? styles.active : ""}`}
+          className={`${styles.filterButton} ${
+            openFilter === "releaseDate" ? styles.active : ""
+          }`}
           onClick={() => toggleFilter("releaseDate")}
         >
           году выпуска
           {openFilter === "releaseDate" && (
             <div className={styles.filterList}>
               <div
-                className={`${styles.filterItem} ${sortOption === "default" ? styles.active : ""}`}
+                className={`${styles.filterItem} ${
+                  sortOption === "default" ? styles.active : ""
+                }`}
                 onClick={() => handleSort("default")}
               >
                 По умолчанию
               </div>
               <div
-                className={`${styles.filterItem} ${sortOption === "new" ? styles.active : ""}`}
+                className={`${styles.filterItem} ${
+                  sortOption === "new" ? styles.active : ""
+                }`}
                 onClick={() => handleSort("new")}
               >
                 Сначала новые
               </div>
               <div
-                className={`${styles.filterItem} ${sortOption === "old" ? styles.active : ""}`}
+                className={`${styles.filterItem} ${
+                  sortOption === "old" ? styles.active : ""
+                }`}
                 onClick={() => handleSort("old")}
               >
                 Сначала старые
@@ -181,8 +161,9 @@ export const MainContent = () => {
           )}
         </div>
         <div
-          className={`${styles.filterButton} ${openFilter === "genre" ? styles.active : ""
-            }`}
+          className={`${styles.filterButton} ${
+            openFilter === "genre" ? styles.active : ""
+          }`}
           onClick={() => toggleFilter("genre")}
         >
           жанру
@@ -200,9 +181,15 @@ export const MainContent = () => {
       </div>
       <div className={`${styles.centerblockContent} ${styles.playlistContent}`}>
         <div className={`${styles.contentTitle} ${styles.playlistTitleCol}`}>
-          <div className={`${styles.playlistTitleCol} ${styles.col01}`}>Трек</div>
-          <div className={`${styles.playlistTitleCol} ${styles.col02}`}>Исполнитель</div>
-          <div className={`${styles.playlistTitleCol} ${styles.col03}`}>Альбом</div>
+          <div className={`${styles.playlistTitleCol} ${styles.col01}`}>
+            Трек
+          </div>
+          <div className={`${styles.playlistTitleCol} ${styles.col02}`}>
+            Исполнитель
+          </div>
+          <div className={`${styles.playlistTitleCol} ${styles.col03}`}>
+            Альбом
+          </div>
           <div className={`${styles.playlistTitleCol} ${styles.col04}`}>
             <svg className={styles.playlistTitleSvg}>
               <use xlinkHref="/img/icon/sprite.svg#icon-watch"></use>
@@ -216,6 +203,5 @@ export const MainContent = () => {
         )}
       </div>
     </div>
-
   );
-}
+};

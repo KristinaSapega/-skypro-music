@@ -40,11 +40,9 @@ export const Track: React.FC<TrackProps> = ({track}) => {
                     </svg>
                     )}
                 </div>
-                {/* <div className="track__title-text"> */}
                     <a className={styles.trackTitleLink} href="http://">
                         <span className={styles.trackTitleSpan}></span>
                     {track.name}</a>
-                {/* </div> */}
             </div>
             <div className={styles.trackAuthor}>
                 <a className={styles.trackAuthorLink}href="http://">{track.author}</a>

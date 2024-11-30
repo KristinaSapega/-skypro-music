@@ -34,7 +34,6 @@ export interface LikeTypesProps {
 }
 
 export const AddTrackFavorite = async ({ _id, token }: LikeTypesProps) => {
-    console.log(token)
     try {
         const response = await fetch(`${URL}/catalog/track/${_id}/favorite/`, {
             method: "POST",
