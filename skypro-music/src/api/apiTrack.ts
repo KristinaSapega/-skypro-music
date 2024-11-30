@@ -1,4 +1,5 @@
 import { TrackType } from "@/types";
+import { refreshAccessToken } from "./apiAuth";
 
 const URL = "https://webdev-music-003b5b991590.herokuapp.com";
 export const GetTracks = async (): Promise<TrackType[]> => {
@@ -12,7 +13,9 @@ export const GetTracks = async (): Promise<TrackType[]> => {
 
 export const GetFavoriteTracks = async () => {
     const token = localStorage.getItem('access')
-
+    if (!token) {
+        throw new Error("Токен отсутствует. Авторизуйтесь снова.");
+    }
     const response = await fetch(URL + "/catalog/track/favorite/all/", {
         method: "GET",
         headers: {
@@ -21,8 +24,13 @@ export const GetFavoriteTracks = async () => {
         }
     });
     if (!response.ok) {
-        console.error("Ошибка запроса:", response.status, response.statusText);
-        throw new Error("Данные не получены")
+        if (response.status === 401) {
+            // Если токен истек, попробуем обновить его
+            const newAccessToken = await refreshAccessToken();
+            return GetFavoriteTracks(); 
+        }
+
+        throw new Error("Ошибка получения избранных треков");
     }
     const data = await response.json();
     return data.data;
