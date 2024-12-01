@@ -5,6 +5,7 @@ import ProgressBar from "../ProgressBar/ProgressBar"
 import { useAppDispatch, useAppSelector } from "@/store/store"
 import { setIsPlaying, setIsShuffle, setNextTrack, setPrevTrack, setShuffle } from "@/store/features/trackSlice"
 import { useLikeTrack } from "@/hooks/useLikeTrack"
+import { formatTime } from "@/utils/timeUtils"
 
 
 export const Bar = () => {
@@ -38,11 +39,6 @@ export const Bar = () => {
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    const formatTime = (time: number) => {
-        const minutes = Math.floor(time / 60);
-        const seconds = Math.floor(time % 60).toString().padStart(2, '0');
-        return `${minutes}:${seconds}`;
-    };
 
     const onTogglePLay = () => {
         if (audioRef.current) {
@@ -74,8 +70,8 @@ export const Bar = () => {
 
     const onChangeTime = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
         setProgress({
-            currentTime: e.currentTarget.currentTime,
-            duration: e.currentTarget.duration
+            currentTime: e.currentTarget.currentTime || 0,
+            duration: e.currentTarget.duration || 0
         })
     };
 
@@ -111,8 +107,8 @@ export const Bar = () => {
             <div className={styles.bar}>
                 <div className={styles.barContent}>
                     <div className={styles.timeDisplay}>
-                        <span>{formatTime(progress.currentTime)}</span>
-                        <span> / {formatTime(progress.duration)}</span>
+                    <span>{progress.currentTime > 0 ? formatTime(progress.currentTime) : "00:00"}</span>
+                    <span> / {progress.duration > 0 ? formatTime(progress.duration) : "00:00"}</span>
                     </div>
                     <ProgressBar
                         max={progress.duration}

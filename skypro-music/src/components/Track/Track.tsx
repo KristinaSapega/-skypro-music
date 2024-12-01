@@ -3,6 +3,8 @@ import styles from "./Track.module.css"
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setIsPlaying, setTrackState } from "@/store/features/trackSlice";
 import { useLikeTrack } from "@/hooks/useLikeTrack";
+import { formatTime } from "@/utils/timeUtils";
+
 
 interface TrackProps {
     track: TrackType
@@ -55,8 +57,7 @@ export const Track: React.FC<TrackProps> = ({track}) => {
                     <use xlinkHref={`/img/icon/sprite.svg#icon-${isLiked ? "like" : "dislike"}`}></use>
                 </svg>
                 <span className={styles.trackTimeText}>
-                    {Math.floor(track.duration_in_seconds / 60)} :{" "}
-                    {Math.floor(track.duration_in_seconds % 60)}
+                {formatTime(track.duration_in_seconds)}
                 </span>
             </div>
         </div>
